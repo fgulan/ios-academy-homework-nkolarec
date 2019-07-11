@@ -14,6 +14,13 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        
+    }
+    @IBOutlet weak var labelOutlet: UILabel!
+    
+    @IBAction func onButtonClick(_ sender: Any) {
+        
     }
     
 

@@ -29,11 +29,17 @@
                                 <rect key="frame" x="186" y="433" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="button:" destination="yfF-hC-RbD" eventType="touchUpInside" id="VkR-5S-ga6"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ogo-uF-nAJ"/>
                     </view>
+                    <connections>
+                        <outlet property="labelOutlet" destination="Ye8-z7-Bdp" id="atq-Vk-FNL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tp4-Yv-vgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
