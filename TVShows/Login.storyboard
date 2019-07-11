@@ -19,18 +19,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ye8-z7-Bdp">
-                                <rect key="frame" x="186" y="397" width="42" height="21"/>
+                                <rect key="frame" x="163" y="362" width="76" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nK8-o9-sYU">
-                                <rect key="frame" x="186" y="433" width="46" height="30"/>
+                                <rect key="frame" x="153" y="426" width="86" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="button:" destination="yfF-hC-RbD" eventType="touchUpInside" id="VkR-5S-ga6"/>
+                                    <action selector="buttonTap:" destination="yfF-hC-RbD" eventType="touchUpInside" id="QaV-eW-sG8"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -38,11 +38,12 @@
                         <viewLayoutGuide key="safeArea" id="ogo-uF-nAJ"/>
                     </view>
                     <connections>
-                        <outlet property="labelOutlet" destination="Ye8-z7-Bdp" id="atq-Vk-FNL"/>
+                        <outlet property="label" destination="Ye8-z7-Bdp" id="hFn-7l-u5w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tp4-Yv-vgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="57.971014492753625" y="41.517857142857139"/>
         </scene>
     </scenes>
 </document>

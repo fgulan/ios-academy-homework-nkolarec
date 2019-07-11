@@ -17,16 +17,19 @@ class LoginViewController: UIViewController {
         
         
     }
-    @IBOutlet weak var labelOutlet: UILabel!
-    
-    @IBAction func onButtonClick(_ sender: Any) {
-        
+    @IBOutlet weak var label: UILabel!
+    var numberOfTaps: Int = 0
+    @IBAction func buttonTap(_ sender: Any) {
+        numberOfTaps += 1
+        label.text = String(numberOfTaps)
     }
+    
+    
+    
     
 
     /*
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
