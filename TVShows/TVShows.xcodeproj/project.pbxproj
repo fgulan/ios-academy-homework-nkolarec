@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		34C54CCA26299C058C868345 /* Pods_TVShows.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEED31BA3F0CD77674106383 /* Pods_TVShows.framework */; };
+		4207856D22D790E2000F1BA9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4207856C22D790E2000F1BA9 /* Login.storyboard */; };
+		4207856F22D7915B000F1BA9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4207856E22D7915B000F1BA9 /* LoginViewController.swift */; };
 		424AB34622CE53DC0042C1D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424AB34522CE53DC0042C1D8 /* AppDelegate.swift */; };
 		424AB34D22CE53DD0042C1D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 424AB34C22CE53DD0042C1D8 /* Assets.xcassets */; };
 		424AB35022CE53DD0042C1D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424AB34E22CE53DD0042C1D8 /* LaunchScreen.storyboard */; };
@@ -15,6 +17,8 @@
 
 /* Begin PBXFileReference section */
 		046308DD3FE637432238A00D /* Pods-TVShows.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVShows.release.xcconfig"; path = "Target Support Files/Pods-TVShows/Pods-TVShows.release.xcconfig"; sourceTree = "<group>"; };
+		4207856C22D790E2000F1BA9 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		4207856E22D7915B000F1BA9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		424AB34222CE53DC0042C1D8 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		424AB34522CE53DC0042C1D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		424AB34C22CE53DD0042C1D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -39,6 +43,8 @@
 		4207856B22D78E1F000F1BA9 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				4207856C22D790E2000F1BA9 /* Login.storyboard */,
+				4207856E22D7915B000F1BA9 /* LoginViewController.swift */,
 			);
 			name = Login;
 			path = ..;
@@ -153,6 +159,7 @@
 			files = (
 				424AB35022CE53DD0042C1D8 /* LaunchScreen.storyboard in Resources */,
 				424AB34D22CE53DD0042C1D8 /* Assets.xcassets in Resources */,
+				4207856D22D790E2000F1BA9 /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4207856F22D7915B000F1BA9 /* LoginViewController.swift in Sources */,
 				424AB34622CE53DC0042C1D8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
