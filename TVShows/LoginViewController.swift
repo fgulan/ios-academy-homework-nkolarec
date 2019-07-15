@@ -9,15 +9,19 @@
 import UIKit
 
 final class LoginViewController: UIViewController {
-
+    
+    //MARK: - Outlets
+    @IBOutlet private weak var label: UILabel!
+    
+    //MARK: - Properties
+    private var numberOfTaps: Int = 0
+    
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    @IBOutlet private weak var label: UILabel!
-    
-    private var numberOfTaps: Int = 0
-    
+    //MARK: - Actions
     @IBAction private func buttonPressed(_ sender: Any) {
         numberOfTaps += 1
         label.text = String(numberOfTaps)
