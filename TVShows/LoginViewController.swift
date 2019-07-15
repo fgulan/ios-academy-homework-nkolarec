@@ -12,6 +12,7 @@ final class LoginViewController: UIViewController {
     
     //MARK: - Outlets
     @IBOutlet private weak var label: UILabel!
+    @IBOutlet private weak var button: UIButton!
     
     //MARK: - Properties
     private var numberOfTaps: Int = 0
@@ -21,6 +22,7 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         self.label.text = String(numberOfTaps)
+        self.button.layer.cornerRadius = 10
     }
     
     //MARK: - Actions
