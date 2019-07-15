@@ -30,11 +30,12 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="buttonTap:" destination="yfF-hC-RbD" eventType="touchUpInside" id="QaV-eW-sG8"/>
+                                    <action selector="buttonPressed:" destination="yfF-hC-RbD" eventType="touchUpInside" id="Fox-n5-peF"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.86322478747906894" green="0.90246141890289489" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ogo-uF-nAJ"/>
                     </view>
                     <connections>

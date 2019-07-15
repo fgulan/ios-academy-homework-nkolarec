@@ -19,10 +19,12 @@ final class LoginViewController: UIViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.label.text = String(numberOfTaps)
     }
     
     //MARK: - Actions
-    @IBAction private func buttonPressed(_ sender: Any) {
+    @IBAction private func buttonPressed(_ sender: UIButton) {
         numberOfTaps += 1
         label.text = String(numberOfTaps)
     }
