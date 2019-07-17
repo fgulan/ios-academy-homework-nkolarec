@@ -22,9 +22,11 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.activityIndicator.startAnimating()
         self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
         self.activityIndicator.stopAnimating()
+        }
         self.label.text = String(numberOfTaps)
         self.button.layer.cornerRadius = 10
     }
@@ -32,7 +34,9 @@ final class LoginViewController: UIViewController {
     //MARK: - Actions
     @IBAction private func buttonPressed(_ sender: UIButton) {
         activityIndicator.startAnimating()
-        activityIndicator.stopAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+            self.activityIndicator.stopAnimating()
+        }
         numberOfTaps += 1
         label.text = String(numberOfTaps)
     }
