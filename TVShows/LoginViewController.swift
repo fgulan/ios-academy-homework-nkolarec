@@ -14,8 +14,11 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var usernameTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var buttonCheck: UIButton!
-    @IBOutlet weak var buttonLogIn: UIButton!
-    @IBOutlet weak var buttonCreateAccount: UIButton!
+    @IBOutlet private weak var buttonLogIn: UIButton!
+    @IBOutlet private weak var buttonCreateAccount: UIButton!
+    
+    //MARK: - Properties
+    private var isChecked: Bool = false
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -26,7 +29,14 @@ final class LoginViewController: UIViewController {
     
     //MARK: - Actions
     @IBAction func buttonChecked(_ sender: UIButton) {
-        buttonCheck.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
+       
+        if(isChecked == false){
+            buttonCheck.setImage(UIImage(named: "ic-checkbox-filled"), for: UIControl.State.normal)
+            isChecked = true
+        }
+        else{
+            buttonCheck.setImage(UIImage(named: "ic-checkbox-empty"), for: UIControl.State.normal)
+            isChecked = false
+        }
     }
-    
 }
