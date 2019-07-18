@@ -12,6 +12,7 @@
 		4207856F22D7915B000F1BA9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4207856E22D7915B000F1BA9 /* LoginViewController.swift */; };
 		42113A5122E11D6500035472 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42113A5022E11D6500035472 /* Home.storyboard */; };
 		42113A5322E11D9900035472 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42113A5222E11D9900035472 /* HomeViewController.swift */; };
+		42113A5622E1352D00035472 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42113A5522E1352D00035472 /* User.swift */; };
 		424AB34622CE53DC0042C1D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424AB34522CE53DC0042C1D8 /* AppDelegate.swift */; };
 		424AB34D22CE53DD0042C1D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 424AB34C22CE53DD0042C1D8 /* Assets.xcassets */; };
 		424AB35022CE53DD0042C1D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424AB34E22CE53DD0042C1D8 /* LaunchScreen.storyboard */; };
@@ -23,6 +24,7 @@
 		4207856E22D7915B000F1BA9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		42113A5022E11D6500035472 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		42113A5222E11D9900035472 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		42113A5522E1352D00035472 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		424AB34222CE53DC0042C1D8 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		424AB34522CE53DC0042C1D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		424AB34C22CE53DD0042C1D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		42113A5422E1349C00035472 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				42113A5522E1352D00035472 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		424AB33922CE53DC0042C1D8 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +94,7 @@
 		424AB34422CE53DC0042C1D8 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				42113A5422E1349C00035472 /* Models */,
 				42113A4F22E11D2200035472 /* Home */,
 				4207856B22D78E1F000F1BA9 /* Login */,
 				424AB34522CE53DC0042C1D8 /* AppDelegate.swift */,
@@ -227,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42113A5622E1352D00035472 /* User.swift in Sources */,
 				4207856F22D7915B000F1BA9 /* LoginViewController.swift in Sources */,
 				424AB34622CE53DC0042C1D8 /* AppDelegate.swift in Sources */,
 				42113A5322E11D9900035472 /* HomeViewController.swift in Sources */,
