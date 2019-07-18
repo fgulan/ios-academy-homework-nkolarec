@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SVProgressHUD
+import Alamofire
+import CodableAlamofire
 
 final class LoginViewController: UIViewController {
     
@@ -38,5 +41,11 @@ final class LoginViewController: UIViewController {
             buttonCheck.setImage(UIImage(named: "ic-checkbox-empty"), for: UIControl.State.normal)
             isChecked = false
         }
+    }
+        
+    @IBAction func registerUser(_ sender: UIButton) {
+    }
+    
+    @IBAction func logInUser(_ sender: Any) {
     }
 }

@@ -109,7 +109,7 @@
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <segue destination="Pd4-w2-qDa" kind="show" id="ghk-f4-0sn"/>
+                                                                    <action selector="logInUser:" destination="yfF-hC-RbD" eventType="touchUpInside" id="zRg-Ih-pdc"/>
                                                                 </connections>
                                                             </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bpg-he-VQO">
@@ -127,7 +127,7 @@
                                                                             <color key="titleColor" red="1" green="0.45882352941176469" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <segue destination="Pd4-w2-qDa" kind="show" id="bYM-E2-dnj"/>
+                                                                            <action selector="registerUser:" destination="yfF-hC-RbD" eventType="touchUpInside" id="DFA-A9-cJ2"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -209,7 +209,4 @@
         <image name="ic-checkbox-empty" width="24" height="24"/>
         <image name="login-logo" width="75" height="80"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="bYM-E2-dnj"/>
-    </inferredMetricsTieBreakers>
 </document>
