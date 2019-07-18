@@ -109,7 +109,7 @@
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="logIn:" destination="yfF-hC-RbD" eventType="touchUpInside" id="xCu-zK-gdc"/>
+                                                                    <segue destination="Pd4-w2-qDa" kind="show" id="ghk-f4-0sn"/>
                                                                 </connections>
                                                             </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bpg-he-VQO">
@@ -127,8 +127,7 @@
                                                                             <color key="titleColor" red="1" green="0.45882352941176469" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="createAccount:" destination="yfF-hC-RbD" eventType="touchUpInside" id="eG1-bk-cUg"/>
-                                                                            <action selector="logIn:" destination="yfF-hC-RbD" eventType="touchUpInside" id="AtV-31-7dd"/>
+                                                                            <segue destination="Pd4-w2-qDa" kind="show" id="bYM-E2-dnj"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -189,9 +188,28 @@
             </objects>
             <point key="canvasLocation" x="1878.2608695652175" y="41.517857142857139"/>
         </scene>
+        <!--Home View Controller-->
+        <scene sceneID="TlX-9F-ykr">
+            <objects>
+                <viewController id="Pd4-w2-qDa" customClass="HomeViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Bz8-ph-8rb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="mIO-R3-7GL"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="b0R-i6-uaY"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1z8-yM-gk4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3662" y="42"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ic-checkbox-empty" width="24" height="24"/>
         <image name="login-logo" width="75" height="80"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="bYM-E2-dnj"/>
+    </inferredMetricsTieBreakers>
 </document>
