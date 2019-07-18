@@ -108,6 +108,9 @@
                                                                 <state key="normal" title="LOG IN">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="logIn:" destination="yfF-hC-RbD" eventType="touchUpInside" id="xCu-zK-gdc"/>
+                                                                </connections>
                                                             </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bpg-he-VQO">
                                                                 <rect key="frame" x="0.0" y="49" width="320" height="48"/>
@@ -123,6 +126,10 @@
                                                                         <state key="normal" title="Create an account">
                                                                             <color key="titleColor" red="1" green="0.45882352941176469" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
+                                                                        <connections>
+                                                                            <action selector="createAccount:" destination="yfF-hC-RbD" eventType="touchUpInside" id="eG1-bk-cUg"/>
+                                                                            <action selector="logIn:" destination="yfF-hC-RbD" eventType="touchUpInside" id="AtV-31-7dd"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                             </stackView>

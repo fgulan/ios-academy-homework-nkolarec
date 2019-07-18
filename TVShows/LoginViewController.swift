@@ -39,4 +39,8 @@ final class LoginViewController: UIViewController {
             isChecked = false
         }
     }
+    @IBAction func logIn(_ sender: UIButton) {
+    }
+    @IBAction func createAccount(_ sender: UIButton) {
+    }
 }
