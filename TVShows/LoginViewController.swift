@@ -11,33 +11,22 @@ import UIKit
 final class LoginViewController: UIViewController {
     
     //MARK: - Outlets
-    @IBOutlet private weak var label: UILabel!
-    @IBOutlet private weak var button: UIButton!
-    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    
-    //MARK: - Properties
-    private var numberOfTaps: Int = 0
+    @IBOutlet private weak var usernameTextField: UITextField!
+    @IBOutlet private weak var passwordTextField: UITextField!
+    @IBOutlet private weak var buttonCheck: UIButton!
+    @IBOutlet weak var buttonLogIn: UIButton!
+    @IBOutlet weak var buttonCreateAccount: UIButton!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.activityIndicator.hidesWhenStopped = true
-        self.activityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
-        self.activityIndicator.stopAnimating()
-        }
-        self.label.text = String(numberOfTaps)
-        self.button.layer.cornerRadius = 10
+        self.buttonLogIn.layer.cornerRadius = 5
     }
     
     //MARK: - Actions
-    @IBAction private func buttonPressed(_ sender: UIButton) {
-        activityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-            self.activityIndicator.stopAnimating()
-        }
-        numberOfTaps += 1
-        label.text = String(numberOfTaps)
+    @IBAction func buttonChecked(_ sender: UIButton) {
+        buttonCheck.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
     }
+    
 }
