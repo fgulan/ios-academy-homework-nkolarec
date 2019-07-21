@@ -110,6 +110,7 @@
                                                                 </state>
                                                                 <connections>
                                                                     <action selector="logInUser:" destination="yfF-hC-RbD" eventType="touchUpInside" id="zRg-Ih-pdc"/>
+                                                                    <segue destination="Pd4-w2-qDa" kind="push" id="Q8R-jj-6Y4"/>
                                                                 </connections>
                                                             </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bpg-he-VQO">
@@ -128,6 +129,7 @@
                                                                         </state>
                                                                         <connections>
                                                                             <action selector="registerUser:" destination="yfF-hC-RbD" eventType="touchUpInside" id="DFA-A9-cJ2"/>
+                                                                            <segue destination="Pd4-w2-qDa" kind="push" id="ZLO-7b-Yd3"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -209,4 +211,7 @@
         <image name="ic-checkbox-empty" width="24" height="24"/>
         <image name="login-logo" width="75" height="80"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Q8R-jj-6Y4"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -19,7 +19,6 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var buttonCheck: UIButton!
     @IBOutlet private weak var buttonLogIn: UIButton!
     @IBOutlet private weak var buttonCreateAccount: UIButton!
-    @IBOutlet private weak var _infoLabel: UILabel!
     
     //MARK: - Properties
     private var isChecked: Bool = false
@@ -29,6 +28,11 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         self.buttonLogIn.layer.cornerRadius = 5
+        SVProgressHUD.setDefaultMaskType(.black)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     //MARK: - Actions
@@ -49,6 +53,7 @@ final class LoginViewController: UIViewController {
             print("One of the fields is empty")
         } else {
             _registerUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
+            self.navigationController?.pushViewController(HomeViewController.init(), animated: true)
         }
         
     }
@@ -58,6 +63,7 @@ final class LoginViewController: UIViewController {
             print("One of the fields is empty")
         } else {
             _loginUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
+            self.navigationController?.pushViewController(HomeViewController.init(), animated: true)
         }
     }
 }
@@ -112,10 +118,10 @@ private extension LoginViewController {
             .responseJSON { [weak self] dataResponse in
                 switch dataResponse.result {
                 case .success(let response):
-                    self?._infoLabel.text = "Success: \(response)"
+                    print("Success: \(response)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
                 case .failure(let error):
-                    self?._infoLabel.text = "API failure: \(error)"
+                    print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
         }
