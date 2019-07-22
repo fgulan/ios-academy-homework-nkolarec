@@ -53,7 +53,6 @@ final class LoginViewController: UIViewController {
             print("One of the fields is empty")
         } else {
             _registerUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
-            self.navigationController?.pushViewController(HomeViewController.init(), animated: true)
         }
         
     }
@@ -63,7 +62,6 @@ final class LoginViewController: UIViewController {
             print("One of the fields is empty")
         } else {
             _loginUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
-            self.navigationController?.pushViewController(HomeViewController.init(), animated: true)
         }
     }
 }
