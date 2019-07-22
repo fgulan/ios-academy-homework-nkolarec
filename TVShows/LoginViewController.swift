@@ -115,7 +115,7 @@ private extension LoginViewController {
                 parameters: parameters,
                 encoding: JSONEncoding.default)
             .validate()
-            .responseJSON { [weak self] dataResponse in
+            .responseJSON { dataResponse in
                 switch dataResponse.result {
                 case .success(let response):
                     print("Success: \(response)")
