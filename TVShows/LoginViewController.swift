@@ -126,7 +126,6 @@ private extension LoginViewController {
                 case .failure(let error):
                     print("API failure: \(error)")
                     self.present(self.loginAlertController, animated: true)
-                    SVProgressHUD.showError(withStatus: "Failure")
                 }
         }
         SVProgressHUD.dismiss()
