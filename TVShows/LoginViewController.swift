@@ -22,11 +22,16 @@ final class LoginViewController: UIViewController {
     
     //MARK: - Properties
     private var isChecked: Bool = false
+    private let loginAlertController = UIAlertController(title: "Failure", message: "Failed to login", preferredStyle: .alert)
+    private let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
+        // ...
+    }
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.loginAlertController.addAction(OKAction)
         self.buttonLogIn.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
     }
@@ -120,6 +125,7 @@ private extension LoginViewController {
                     SVProgressHUD.showSuccess(withStatus: "Success")
                 case .failure(let error):
                     print("API failure: \(error)")
+                    self.present(self.loginAlertController, animated: true)
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
         }
