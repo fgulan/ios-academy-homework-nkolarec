@@ -20,9 +20,6 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
     
-    //MARK: - Properties
-    private var isChecked: Bool = false
-    
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,31 +28,33 @@ final class LoginViewController: UIViewController {
         SVProgressHUD.setDefaultMaskType(.black)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     //MARK: - Actions
-    @IBAction func rememberMeChecked(_ sender: UIButton) {
+    @IBAction private func rememberMeChecked(_ sender: UIButton) {
         checkButton.isSelected.toggle()
     }
-    
         
-    @IBAction func registerUser(_ sender: UIButton) {
-        if(usernameTextField.text!.isEmpty && passwordTextField.text!.isEmpty){
-            print("One of the fields is empty")
-        } else {
-            _registerUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
+    @IBAction private func registerUser(_ sender: UIButton) {
+        guard
+            let username = usernameTextField.text,
+            let password = passwordTextField.text,
+            !username.isEmpty,
+            !password.isEmpty
+        else {
+            return
         }
-        
+        _registerUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
     }
     
-    @IBAction func logInUser(_ sender: Any) {
-        if(usernameTextField.text!.isEmpty && passwordTextField.text!.isEmpty){
-            print("One of the fields is empty")
-        } else {
-            _loginUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
+    @IBAction private func logInUser(_ sender: Any) {
+        guard
+            let username = usernameTextField.text,
+            let password = passwordTextField.text,
+            !username.isEmpty,
+            !password.isEmpty
+            else {
+                return
         }
+        _loginUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
     }
 }
 
@@ -77,15 +76,16 @@ private extension LoginViewController {
                 parameters: parameters,
                 encoding: JSONEncoding.default)
             .validate()
-            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { (response: DataResponse<User>) in
-                switch response.result {
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<User>) in
+                switch response.result { 
                 case .success(let user):
                     print("Success: \(user)")
+                    self?._loginUserWith(email: email, password: password)
                 case .failure(let error):
                     print("API failure: \(error)")
                 }
-        }
         SVProgressHUD.dismiss()
+        }
     }
     
 }
@@ -106,17 +106,18 @@ private extension LoginViewController {
                 parameters: parameters,
                 encoding: JSONEncoding.default)
             .validate()
-            .responseJSON { dataResponse in
+            .responseJSON { [weak self] dataResponse in
                 switch dataResponse.result {
                 case .success(let response):
                     print("Success: \(response)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
+                    self?.navigationController?.pushViewController(HomeViewController.init(), animated: true)
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Failure")
                 }
-        }
         SVProgressHUD.dismiss()
+        }
     }
     
 }
