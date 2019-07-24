@@ -78,6 +78,7 @@
                                                                             <constraint firstAttribute="height" constant="25" id="lHe-yD-49U"/>
                                                                         </constraints>
                                                                         <state key="normal" title="Button" image="ic-checkbox-empty"/>
+                                                                        <state key="selected" image="ic-checkbox-filled"/>
                                                                         <connections>
                                                                             <action selector="rememberMeChecked:" destination="yfF-hC-RbD" eventType="touchUpInside" id="YEZ-0q-3QS"/>
                                                                         </connections>
@@ -209,6 +210,7 @@
     </scenes>
     <resources>
         <image name="ic-checkbox-empty" width="24" height="24"/>
+        <image name="ic-checkbox-filled" width="24" height="24"/>
         <image name="login-logo" width="75" height="80"/>
     </resources>
     <inferredMetricsTieBreakers>

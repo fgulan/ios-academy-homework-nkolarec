@@ -37,16 +37,9 @@ final class LoginViewController: UIViewController {
     
     //MARK: - Actions
     @IBAction func rememberMeChecked(_ sender: UIButton) {
-       
-        if(isChecked == false){
-            checkButton.setImage(UIImage(named: "ic-checkbox-filled"), for: UIControl.State.normal)
-            isChecked = true
-        }
-        else{
-            checkButton.setImage(UIImage(named: "ic-checkbox-empty"), for: UIControl.State.normal)
-            isChecked = false
-        }
+        checkButton.isSelected.toggle()
     }
+    
         
     @IBAction func registerUser(_ sender: UIButton) {
         if(usernameTextField.text!.isEmpty && passwordTextField.text!.isEmpty){
