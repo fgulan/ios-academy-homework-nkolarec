@@ -16,9 +16,9 @@ final class LoginViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet private weak var usernameTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
-    @IBOutlet private weak var buttonCheck: UIButton!
-    @IBOutlet private weak var buttonLogIn: UIButton!
-    @IBOutlet private weak var buttonCreateAccount: UIButton!
+    @IBOutlet private weak var checkButton: UIButton!
+    @IBOutlet private weak var logInButton: UIButton!
+    @IBOutlet private weak var createAccountButton: UIButton!
     
     //MARK: - Properties
     private var isChecked: Bool = false
@@ -27,7 +27,7 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.buttonLogIn.layer.cornerRadius = 5
+        self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
     }
     
@@ -36,14 +36,14 @@ final class LoginViewController: UIViewController {
     }
     
     //MARK: - Actions
-    @IBAction func buttonChecked(_ sender: UIButton) {
+    @IBAction func rememberMeChecked(_ sender: UIButton) {
        
         if(isChecked == false){
-            buttonCheck.setImage(UIImage(named: "ic-checkbox-filled"), for: UIControl.State.normal)
+            checkButton.setImage(UIImage(named: "ic-checkbox-filled"), for: UIControl.State.normal)
             isChecked = true
         }
         else{
-            buttonCheck.setImage(UIImage(named: "ic-checkbox-empty"), for: UIControl.State.normal)
+            checkButton.setImage(UIImage(named: "ic-checkbox-empty"), for: UIControl.State.normal)
             isChecked = false
         }
     }

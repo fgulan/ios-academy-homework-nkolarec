@@ -79,7 +79,7 @@
                                                                         </constraints>
                                                                         <state key="normal" title="Button" image="ic-checkbox-empty"/>
                                                                         <connections>
-                                                                            <action selector="buttonChecked:" destination="yfF-hC-RbD" eventType="touchUpInside" id="YrS-ef-dGM"/>
+                                                                            <action selector="rememberMeChecked:" destination="yfF-hC-RbD" eventType="touchUpInside" id="YEZ-0q-3QS"/>
                                                                         </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pu8-Ph-n6E">
@@ -109,7 +109,7 @@
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="logInUser:" destination="yfF-hC-RbD" eventType="touchUpInside" id="zRg-Ih-pdc"/>
+                                                                    <action selector="logInUser:" destination="yfF-hC-RbD" eventType="touchUpInside" id="nxB-5m-kRg"/>
                                                                     <segue destination="Pd4-w2-qDa" kind="push" id="Q8R-jj-6Y4"/>
                                                                 </connections>
                                                             </button>
@@ -128,7 +128,7 @@
                                                                             <color key="titleColor" red="1" green="0.45882352941176469" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="registerUser:" destination="yfF-hC-RbD" eventType="touchUpInside" id="DFA-A9-cJ2"/>
+                                                                            <action selector="registerUser:" destination="yfF-hC-RbD" eventType="touchUpInside" id="MGZ-D4-zWh"/>
                                                                             <segue destination="Pd4-w2-qDa" kind="push" id="ZLO-7b-Yd3"/>
                                                                         </connections>
                                                                     </button>
@@ -161,9 +161,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="5YT-Wm-Tqz"/>
                     <connections>
-                        <outlet property="buttonCheck" destination="I1n-pl-BtE" id="hWT-Bn-MDw"/>
-                        <outlet property="buttonCreateAccount" destination="K1b-03-88G" id="6J1-hk-f96"/>
-                        <outlet property="buttonLogIn" destination="mkI-JH-1iE" id="Ive-oX-UBR"/>
+                        <outlet property="checkButton" destination="I1n-pl-BtE" id="JGl-f6-X45"/>
+                        <outlet property="createAccountButton" destination="K1b-03-88G" id="fl8-CA-vHw"/>
+                        <outlet property="logInButton" destination="mkI-JH-1iE" id="Hdi-of-teN"/>
                         <outlet property="passwordTextField" destination="idT-TM-mlK" id="w47-CZ-Vpx"/>
                         <outlet property="usernameTextField" destination="FvA-6U-U8e" id="fHl-iD-3L8"/>
                     </connections>
