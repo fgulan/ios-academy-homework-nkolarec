@@ -21,14 +21,19 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var createAccountButton: UIButton!
     
     //MARK: - Properties
-    let alertEmptyFieldsDuringRegister = UIAlertController(title: "Register", message: "fields must not be empty", preferredStyle: .alert)
+    let alertEmptyFields = UIAlertController(title: "Sign in", message: "Fields must not be empty", preferredStyle: .alert)
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        //...
+    }
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.logInButton.layer.cornerRadius = 5
+        self.alertEmptyFields.addAction(cancelAction)
         SVProgressHUD.setDefaultMaskType(.black)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,7 +52,7 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
         else {
-            //TODO show message on error
+            self.present(alertEmptyFields, animated: true)
             return
         }
         _registerUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
@@ -60,7 +65,7 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
             else {
-                //TODO show message on error
+                self.present(alertEmptyFields, animated: true)
                 return
         }
         _loginUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
