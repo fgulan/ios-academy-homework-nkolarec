@@ -20,12 +20,19 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
     
+    //MARK: - Properties
+    let alertEmptyFieldsDuringRegister = UIAlertController(title: "Register", message: "fields must not be empty", preferredStyle: .alert)
+    
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     //MARK: - Actions
@@ -40,6 +47,7 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
         else {
+            //TODO show message on error
             return
         }
         _registerUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
@@ -52,6 +60,7 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
             else {
+                //TODO show message on error
                 return
         }
         _loginUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
@@ -77,7 +86,7 @@ private extension LoginViewController {
                 encoding: JSONEncoding.default)
             .validate()
             .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<User>) in
-                switch response.result { 
+                switch response.result {
                 case .success(let user):
                     print("Success: \(user)")
                     self?._loginUserWith(email: email, password: password)
@@ -95,6 +104,7 @@ private extension LoginViewController {
     
     func _loginUserWith(email: String, password: String) {
         SVProgressHUD.show()
+        
         let parameters: [String: String] = [
             "email": email,
             "password": password
@@ -111,7 +121,14 @@ private extension LoginViewController {
                 case .success(let response):
                     print("Success: \(response)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
-                    self?.navigationController?.pushViewController(HomeViewController.init(), animated: true)
+                    
+                    let bundle = Bundle.main
+                    let storyboard = UIStoryboard(name: "Home", bundle: bundle)
+                    let homeViewController = storyboard.instantiateViewController(
+                        withIdentifier: "HomeViewController"
+                    )
+                    self?.navigationController?.pushViewController(homeViewController, animated: true)
+                    
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Failure")
