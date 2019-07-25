@@ -20,6 +20,9 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
     
+    //MARK: - Properties
+    private var currentUser: User!
+    
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -28,6 +31,13 @@ final class LoginViewController: UIViewController {
         self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
         
+    }
+    
+    //MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? HomeViewController {
+            destinationVC.delegate = self
+        }
     }
     
     //MARK: - Actions
@@ -84,6 +94,7 @@ private extension LoginViewController {
                 switch response.result {
                 case .success(let user):
                     print("Success: \(user)")
+                    self?.currentUser = user
                     self?._loginUserWith(email: email, password: password)
                 case .failure(let error):
                     print("API failure: \(error)")
@@ -123,6 +134,7 @@ private extension LoginViewController {
                     let homeViewController = storyboard.instantiateViewController(
                         withIdentifier: "HomeViewController"
                     )
+                    
                     self?.navigationController?.pushViewController(homeViewController, animated: true)
                     
                 case .failure(let error):
@@ -138,5 +150,11 @@ private extension LoginViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alert.addAction(cancelAction)
         present(alert, animated: true)
+    }
+}
+
+extension LoginViewController : HomeViewControllerDelegate {
+    func loggedInUser() -> User {
+        return currentUser
     }
 }

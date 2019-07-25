@@ -8,9 +8,19 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+protocol HomeViewControllerDelegate : class {
+    func loggedInUser() -> User
+}
 
+final class HomeViewController: UIViewController {
+    
+    private var currentUser: User!
+
+    weak var delegate:HomeViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currentUser = delegate?.loggedInUser()
     }
 }
