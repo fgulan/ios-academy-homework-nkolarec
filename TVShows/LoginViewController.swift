@@ -16,58 +16,47 @@ final class LoginViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet private weak var usernameTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
-    @IBOutlet private weak var buttonCheck: UIButton!
-    @IBOutlet private weak var buttonLogIn: UIButton!
-    @IBOutlet private weak var buttonCreateAccount: UIButton!
+    @IBOutlet private weak var checkButton: UIButton!
+    @IBOutlet private weak var logInButton: UIButton!
+    @IBOutlet private weak var createAccountButton: UIButton!
     
-    //MARK: - Properties
-    private var isChecked: Bool = false
-    private let loginAlertController = UIAlertController(title: "Failure", message: "Failed to login", preferredStyle: .alert)
-    private let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
-        // ...
-    }
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loginAlertController.addAction(OKAction)
-        self.buttonLogIn.layer.cornerRadius = 5
+        self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
     }
     
     //MARK: - Actions
-    @IBAction func buttonChecked(_ sender: UIButton) {
-       
-        if(isChecked == false){
-            buttonCheck.setImage(UIImage(named: "ic-checkbox-filled"), for: UIControl.State.normal)
-            isChecked = true
-        }
-        else{
-            buttonCheck.setImage(UIImage(named: "ic-checkbox-empty"), for: UIControl.State.normal)
-            isChecked = false
-        }
+    @IBAction private func rememberMeChecked(_ sender: UIButton) {
+        checkButton.isSelected.toggle()
     }
         
-    @IBAction func registerUser(_ sender: UIButton) {
-        if(usernameTextField.text!.isEmpty && passwordTextField.text!.isEmpty){
-            print("One of the fields is empty")
-        } else {
-            _registerUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
+    @IBAction private func registerUser(_ sender: UIButton) {
+        guard
+            let username = usernameTextField.text,
+            let password = passwordTextField.text,
+            !username.isEmpty,
+            !password.isEmpty
+        else {
+            return
         }
-        
+        _registerUserWith(email: username, password: password)
     }
     
-    @IBAction func logInUser(_ sender: Any) {
-        if(usernameTextField.text!.isEmpty && passwordTextField.text!.isEmpty){
-            print("One of the fields is empty")
-        } else {
-            _loginUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
+    @IBAction private func logInUser(_ sender: Any) {
+        guard
+            let username = usernameTextField.text,
+            let password = passwordTextField.text,
+            !username.isEmpty,
+            !password.isEmpty
+            else {
+                return
         }
+        _loginUserWith(email: username, password: password)
     }
 }
 
@@ -89,15 +78,16 @@ private extension LoginViewController {
                 parameters: parameters,
                 encoding: JSONEncoding.default)
             .validate()
-            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { (response: DataResponse<User>) in
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<User>) in
                 switch response.result {
                 case .success(let user):
                     print("Success: \(user)")
+                    self?._loginUserWith(email: email, password: password)
                 case .failure(let error):
                     print("API failure: \(error)")
                 }
-        }
         SVProgressHUD.dismiss()
+        }
     }
     
 }
@@ -107,6 +97,7 @@ private extension LoginViewController {
     
     func _loginUserWith(email: String, password: String) {
         SVProgressHUD.show()
+        
         let parameters: [String: String] = [
             "email": email,
             "password": password
@@ -118,17 +109,30 @@ private extension LoginViewController {
                 parameters: parameters,
                 encoding: JSONEncoding.default)
             .validate()
-            .responseJSON { dataResponse in
+            .responseJSON { [weak self] dataResponse in
                 switch dataResponse.result {
                 case .success(let response):
                     print("Success: \(response)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
+                    
+                    let bundle = Bundle.main
+                    let storyboard = UIStoryboard(name: "Home", bundle: bundle)
+                    let homeViewController = storyboard.instantiateViewController(
+                        withIdentifier: "HomeViewController"
+                    )
+                    self?.navigationController?.pushViewController(homeViewController, animated: true)
+                    
                 case .failure(let error):
                     print("API failure: \(error)")
-                    self.present(self.loginAlertController, animated: true)
                 }
-        }
         SVProgressHUD.dismiss()
+        }
     }
     
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
 }

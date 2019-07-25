@@ -13,7 +13,7 @@
         <!--Home View Controller-->
         <scene sceneID="DAR-6i-MFm">
             <objects>
-                <viewController id="6zv-xM-xrB" customClass="HomeViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="6zv-xM-xrB" customClass="HomeViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CO1-nA-tsd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
