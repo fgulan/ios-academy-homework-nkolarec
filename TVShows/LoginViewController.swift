@@ -42,6 +42,7 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
         else {
+            showAlert(title: "Register", message: "Fields must not be empty")
             return
         }
         _registerUserWith(email: username, password: password)
@@ -54,6 +55,7 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
             else {
+                showAlert(title: "Login", message: "Fields must not be empty")
                 return
         }
         _loginUserWith(email: username, password: password)
@@ -85,6 +87,7 @@ private extension LoginViewController {
                     self?._loginUserWith(email: email, password: password)
                 case .failure(let error):
                     print("API failure: \(error)")
+                    self?.showAlert(title: "Register", message: "Failed to register.")
                 }
         SVProgressHUD.dismiss()
         }
@@ -124,6 +127,7 @@ private extension LoginViewController {
                     
                 case .failure(let error):
                     print("API failure: \(error)")
+                    self?.showAlert(title: "Login", message: "Failed to login.")
                 }
         SVProgressHUD.dismiss()
         }
