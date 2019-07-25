@@ -55,7 +55,7 @@ final class LoginViewController: UIViewController {
             self.present(alertEmptyFields, animated: true)
             return
         }
-        _registerUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
+        _registerUserWith(email: username, password: password)
     }
     
     @IBAction private func logInUser(_ sender: Any) {
@@ -68,7 +68,7 @@ final class LoginViewController: UIViewController {
                 self.present(alertEmptyFields, animated: true)
                 return
         }
-        _loginUserWith(email: usernameTextField.text!, password: passwordTextField.text!)
+        _loginUserWith(email: username, password: password)
     }
 }
 
