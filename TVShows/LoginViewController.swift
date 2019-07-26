@@ -20,9 +20,7 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
     
-    //MARK: - Properties
-    private var currentUser: User!
-    
+    //MARK: -Properties
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -31,13 +29,6 @@ final class LoginViewController: UIViewController {
         self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
         
-    }
-    
-    //MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVC = segue.destination as? HomeViewController {
-            destinationVC.delegate = self
-        }
     }
     
     //MARK: - Actions
@@ -94,7 +85,6 @@ private extension LoginViewController {
                 switch response.result {
                 case .success(let user):
                     print("Success: \(user)")
-                    self?.currentUser = user
                     self?._loginUserWith(email: email, password: password)
                 case .failure(let error):
                     print("API failure: \(error)")
@@ -129,13 +119,27 @@ private extension LoginViewController {
                     print("Success: \(response)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     
-                    let bundle = Bundle.main
-                    let storyboard = UIStoryboard(name: "Home", bundle: bundle)
-                    let homeViewController = storyboard.instantiateViewController(
-                        withIdentifier: "HomeViewController"
-                    )
-                    
-                    self?.navigationController?.pushViewController(homeViewController, animated: true)
+                    guard
+                        let jsonDict = response as? Dictionary<String, Any>,
+                        let dataDict = jsonDict["data"],
+                        let dataBinary = try? JSONSerialization.data(withJSONObject: dataDict)
+                        else {
+                            return
+                    }
+                    do {
+                        let loggedInUserToken = try JSONDecoder().decode(LoginData.self, from: dataBinary)
+                        print("Success: \(loggedInUserToken.token)")
+                        
+                        let bundle = Bundle.main
+                        let storyboard = UIStoryboard(name: "Home", bundle: bundle)
+                        let homeViewController = storyboard.instantiateViewController(
+                            withIdentifier: "HomeViewController"
+                        )
+                        self?.navigationController?.pushViewController(homeViewController, animated: true)
+                        
+                    } catch let error {
+                        print("Serialization error: \(error)")
+                    }
                     
                 case .failure(let error):
                     print("API failure: \(error)")
@@ -150,11 +154,5 @@ private extension LoginViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alert.addAction(cancelAction)
         present(alert, animated: true)
-    }
-}
-
-extension LoginViewController : HomeViewControllerDelegate {
-    func loggedInUser() -> User {
-        return currentUser
     }
 }
