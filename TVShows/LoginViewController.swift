@@ -20,6 +20,9 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
     
+    //MARK: Properties
+    private var userToken: String!
+    
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +30,12 @@ final class LoginViewController: UIViewController {
         self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
         
+    }
+    
+    //MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let homeViewController = segue.destination as! HomeViewController
+        homeViewController.delegate = self
     }
     
     //MARK: - Actions
@@ -117,12 +126,14 @@ private extension LoginViewController {
                     print("Success: \(logInData.token)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     
+                    self?.userToken = logInData.token
+                    
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Home", bundle: bundle)
                     let homeViewController = storyboard.instantiateViewController(
                         withIdentifier: "HomeViewController"
                     )
-                    self?.navigationController?.pushViewController(homeViewController, animated: true)
+                    self?.navigationController?.setViewControllers([homeViewController], animated: true)
                     
                 case .failure(let error):
                     print("API failure: \(error)")
@@ -137,5 +148,11 @@ private extension LoginViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alert.addAction(cancelAction)
         present(alert, animated: true)
+    }
+}
+
+extension LoginViewController: HomeViewControllerDelegate {
+    func getLoginData() -> String! {
+        return userToken
     }
 }
