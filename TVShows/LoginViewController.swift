@@ -20,8 +20,6 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
     
-    //MARK: -Properties
-    
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,33 +111,18 @@ private extension LoginViewController {
                 parameters: parameters,
                 encoding: JSONEncoding.default)
             .validate()
-            .responseJSON { [weak self] dataResponse in
-                switch dataResponse.result {
-                case .success(let response):
-                    print("Success: \(response)")
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<LoginData>) in
+                switch response.result {
+                case .success(let logInData):
+                    print("Success: \(logInData.token)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     
-                    guard
-                        let jsonDict = response as? Dictionary<String, Any>,
-                        let dataDict = jsonDict["data"],
-                        let dataBinary = try? JSONSerialization.data(withJSONObject: dataDict)
-                        else {
-                            return
-                    }
-                    do {
-                        let loggedInUserToken = try JSONDecoder().decode(LoginData.self, from: dataBinary)
-                        print("Success: \(loggedInUserToken.token)")
-                        
-                        let bundle = Bundle.main
-                        let storyboard = UIStoryboard(name: "Home", bundle: bundle)
-                        let homeViewController = storyboard.instantiateViewController(
-                            withIdentifier: "HomeViewController"
-                        )
-                        self?.navigationController?.pushViewController(homeViewController, animated: true)
-                        
-                    } catch let error {
-                        print("Serialization error: \(error)")
-                    }
+                    let bundle = Bundle.main
+                    let storyboard = UIStoryboard(name: "Home", bundle: bundle)
+                    let homeViewController = storyboard.instantiateViewController(
+                        withIdentifier: "HomeViewController"
+                    )
+                    self?.navigationController?.pushViewController(homeViewController, animated: true)
                     
                 case .failure(let error):
                     print("API failure: \(error)")
