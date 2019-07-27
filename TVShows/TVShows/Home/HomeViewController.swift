@@ -11,12 +11,18 @@ import Alamofire
 
 final class HomeViewController: UIViewController {
     
+    //MARK: - Properties
+    private var shows: [Show] = []
     var token: String = ""
     
+    // MARK: - Private UI
+    @IBOutlet weak var tableView: UITableView!
+    
+    //MARK: Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //for some reason it doesn't change when I try to change it in the LoginViewController
+        //for some reason it remains an empty string like it was set
         let headers = ["Authorization": token]
         Alamofire
             .request(
@@ -28,9 +34,51 @@ final class HomeViewController: UIViewController {
                 switch response.result {
                 case .success(let shows):
                     print("Success: \(shows)")
+                    self?.shows = shows
+                    self?.setupTableView()
+                    self?.tableView.reloadData()
                 case .failure(let error):
                     print("API failure: \(error)")
                 }
         }
+    }
+}
+
+// MARK: - UITableView
+extension HomeViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let show = shows[indexPath.row]
+        print("Selected show: \(show)")
+    }
+}
+
+extension HomeViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return shows.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        print("CURRENT INDEX PATH BEING CONFIGURED: \(indexPath)")
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ShowTableViewCell.self), for: indexPath) as! ShowTableViewCell
+        cell.configure(show: shows[indexPath.row])
+        return cell
+    }
+    
+    
+}
+private extension HomeViewController {
+    func setupTableView() {
+        
+        tableView.estimatedRowHeight = 110
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.tableFooterView = UIView()
+
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 }

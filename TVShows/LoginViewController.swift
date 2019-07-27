@@ -13,7 +13,7 @@ import CodableAlamofire
 
 final class LoginViewController: UIViewController {
     
-    //MARK: - Outlets
+    //MARK: - Private UI
     @IBOutlet private weak var usernameTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var checkButton: UIButton!
@@ -121,7 +121,6 @@ private extension LoginViewController {
                     
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Home", bundle: bundle)
-                    
                     let homeViewController = storyboard.instantiateViewController(
                         withIdentifier: "HomeViewController"
                     )
