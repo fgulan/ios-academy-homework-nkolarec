@@ -32,12 +32,6 @@ final class LoginViewController: UIViewController {
         
     }
     
-    //MARK: Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let homeViewController = segue.destination as! HomeViewController
-        homeViewController.delegate = self
-    }
-    
     //MARK: - Actions
     @IBAction private func rememberMeChecked(_ sender: UIButton) {
         checkButton.isSelected.toggle()
@@ -100,7 +94,6 @@ private extension LoginViewController {
         SVProgressHUD.dismiss()
         }
     }
-    
 }
 
 // MARK: - Login
@@ -126,13 +119,14 @@ private extension LoginViewController {
                     print("Success: \(logInData.token)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     
-                    self?.userToken = logInData.token
-                    
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Home", bundle: bundle)
+                    
                     let homeViewController = storyboard.instantiateViewController(
                         withIdentifier: "HomeViewController"
                     )
+                    let homeViewControllerClass = HomeViewController.init(nibName: homeViewController.nibName, bundle: nil)
+                    homeViewControllerClass.token = logInData.token
                     self?.navigationController?.setViewControllers([homeViewController], animated: true)
                     
                 case .failure(let error):
@@ -148,11 +142,5 @@ private extension LoginViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alert.addAction(cancelAction)
         present(alert, animated: true)
-    }
-}
-
-extension LoginViewController: HomeViewControllerDelegate {
-    func getLoginData() -> String! {
-        return userToken
     }
 }

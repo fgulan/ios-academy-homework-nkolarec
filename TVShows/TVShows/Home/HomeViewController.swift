@@ -9,23 +9,14 @@
 import UIKit
 import Alamofire
 
-protocol HomeViewControllerDelegate: class {
-    func getLoginData() -> String!
-}
-
 final class HomeViewController: UIViewController {
-
-    weak var delegate: HomeViewControllerDelegate?
+    
+    var token: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard
-            let token = delegate?.getLoginData()!
-        else {
-                print("Error: token is null")
-                return
-        }
+        //for some reason it doesn't change when I try to change it in the LoginViewController
         let headers = ["Authorization": token]
         Alamofire
             .request(
@@ -41,6 +32,5 @@ final class HomeViewController: UIViewController {
                     print("API failure: \(error)")
                 }
         }
-}
-
+    }
 }

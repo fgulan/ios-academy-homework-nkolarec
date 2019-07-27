@@ -11,7 +11,7 @@ import Foundation
 struct Show: Codable {
     let title: String
     let imageUrl: String
-    let likesCount: String
+    let likesCount: Int
     let id: String
     
     enum CodingKeys: String, CodingKey {
