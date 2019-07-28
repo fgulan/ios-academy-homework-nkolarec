@@ -20,6 +20,8 @@
 		42B42C1522ECE897002805C1 /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B42C1422ECE897002805C1 /* ShowTableViewCell.swift */; };
 		42CB143F22EDC06C0049DDBA /* ShowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CB143E22EDC06C0049DDBA /* ShowDetails.swift */; };
 		42CB144122EDC2910049DDBA /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CB144022EDC2910049DDBA /* Episode.swift */; };
+		42CB144422EDC7760049DDBA /* ShowDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CB144322EDC7760049DDBA /* ShowDetails.storyboard */; };
+		42CB144622EDC79E0049DDBA /* ShowDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CB144522EDC79E0049DDBA /* ShowDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		42B42C1422ECE897002805C1 /* ShowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
 		42CB143E22EDC06C0049DDBA /* ShowDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetails.swift; sourceTree = "<group>"; };
 		42CB144022EDC2910049DDBA /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		42CB144322EDC7760049DDBA /* ShowDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ShowDetails.storyboard; sourceTree = "<group>"; };
+		42CB144522EDC79E0049DDBA /* ShowDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailsViewController.swift; sourceTree = "<group>"; };
 		6267B83D12B6409CBA707F89 /* Pods-TVShows.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVShows.debug.xcconfig"; path = "Target Support Files/Pods-TVShows/Pods-TVShows.debug.xcconfig"; sourceTree = "<group>"; };
 		DEED31BA3F0CD77674106383 /* Pods_TVShows.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TVShows.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -106,6 +110,7 @@
 		424AB34422CE53DC0042C1D8 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				42CB144222EDC73E0049DDBA /* Show */,
 				42113A5422E1349C00035472 /* Models */,
 				42113A4F22E11D2200035472 /* Home */,
 				4207856B22D78E1F000F1BA9 /* Login */,
@@ -115,6 +120,15 @@
 				424AB35122CE53DD0042C1D8 /* Info.plist */,
 			);
 			path = TVShows;
+			sourceTree = "<group>";
+		};
+		42CB144222EDC73E0049DDBA /* Show */ = {
+			isa = PBXGroup;
+			children = (
+				42CB144322EDC7760049DDBA /* ShowDetails.storyboard */,
+				42CB144522EDC79E0049DDBA /* ShowDetailsViewController.swift */,
+			);
+			path = Show;
 			sourceTree = "<group>";
 		};
 		CE02DA9EAA90BF05B3FCCC40 /* Pods */ = {
@@ -197,6 +211,7 @@
 				424AB35022CE53DD0042C1D8 /* LaunchScreen.storyboard in Resources */,
 				424AB34D22CE53DD0042C1D8 /* Assets.xcassets in Resources */,
 				4207856D22D790E2000F1BA9 /* Login.storyboard in Resources */,
+				42CB144422EDC7760049DDBA /* ShowDetails.storyboard in Resources */,
 				42113A5122E11D6500035472 /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +272,7 @@
 				424AB34622CE53DC0042C1D8 /* AppDelegate.swift in Sources */,
 				42B42C1522ECE897002805C1 /* ShowTableViewCell.swift in Sources */,
 				42AC8FB222EBAFAE002898E4 /* Show.swift in Sources */,
+				42CB144622EDC79E0049DDBA /* ShowDetailsViewController.swift in Sources */,
 				42113A5322E11D9900035472 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
