@@ -10,6 +10,7 @@ import UIKit
 
 class ShowDetailsViewController: UIViewController {
 
+    var showId: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
     }
