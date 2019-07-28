@@ -24,7 +24,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="imi-G7-sLh">
                                         <rect key="frame" x="15" y="73" width="320" height="373"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login-logo" translatesAutoresizingMaskIntoConstraints="NO" id="uN9-OK-m4a">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-login-logo" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uN9-OK-m4a">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="LYR-Up-E0g">
@@ -209,6 +209,6 @@
     <resources>
         <image name="ic-checkbox-empty" width="24" height="24"/>
         <image name="ic-checkbox-filled" width="24" height="24"/>
-        <image name="login-logo" width="75" height="80"/>
+        <image name="img-login-logo" width="75" height="80"/>
     </resources>
 </document>
