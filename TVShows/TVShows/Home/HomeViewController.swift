@@ -51,6 +51,13 @@ extension HomeViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let show = shows[indexPath.row]
         print("Selected show: \(show)")
+        //TODO: make api call for requesting show details and push ShowDetailsController
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "ShowDetails", bundle: bundle)
+        let showDetailsViewController = storyboard.instantiateViewController(
+            withIdentifier: "ShowDetailsViewController"
+        )
+        self.navigationController?.pushViewController(showDetailsViewController, animated: true)
     }
 }
 
