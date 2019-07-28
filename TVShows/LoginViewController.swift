@@ -20,16 +20,12 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
     
-    //MARK: Properties
-    private var userToken: String!
-    
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
-        
     }
     
     //MARK: - Actions
