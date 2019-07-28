@@ -27,7 +27,7 @@ final class LoginViewController: UIViewController {
         self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
     }
-    
+
     //MARK: - Actions
     @IBAction private func rememberMeChecked(_ sender: UIButton) {
         checkButton.isSelected.toggle()
@@ -114,14 +114,13 @@ private extension LoginViewController {
                 case .success(let logInData):
                     print("Success: \(logInData.token)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
-                    
+ 
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Home", bundle: bundle)
                     let homeViewController = storyboard.instantiateViewController(
                         withIdentifier: "HomeViewController"
-                    )
-                    let homeViewControllerClass = HomeViewController.init(nibName: homeViewController.nibName, bundle: nil)
-                    homeViewControllerClass.token = logInData.token
+                    ) as! HomeViewController
+                    homeViewController.token = logInData.token
                     self?.navigationController?.setViewControllers([homeViewController], animated: true)
                     
                 case .failure(let error):

@@ -11,6 +11,9 @@ import UIKit
 class ShowDetailsViewController: UIViewController {
 
     var showId: String = ""
+    var token: String = ""
+    
+    //MARK: Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
     }

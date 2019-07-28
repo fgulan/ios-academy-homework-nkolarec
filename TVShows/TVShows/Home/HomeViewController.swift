@@ -14,6 +14,7 @@ final class HomeViewController: UIViewController {
     //MARK: - Properties
     private var shows: [Show] = []
     var token: String = ""
+    var showId: String = ""
     
     // MARK: - Private UI
     @IBOutlet weak var tableView: UITableView!
@@ -22,7 +23,6 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //for some reason it remains an empty string like it was set
         let headers = ["Authorization": token]
         Alamofire
             .request(
@@ -39,6 +39,7 @@ final class HomeViewController: UIViewController {
                     self?.tableView.reloadData()
                 case .failure(let error):
                     print("API failure: \(error)")
+                    self?.showAlert(title: "API failure", message: "Cannot get list of shows")
                 }
         }
     }
@@ -51,14 +52,16 @@ extension HomeViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let show = shows[indexPath.row]
         print("Selected show: \(show)")
-        //TODO: make api call for requesting show details and pass showId
+
+        //TODO: make api call for requesting show details
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "ShowDetails", bundle: bundle)
         let showDetailsViewController = storyboard.instantiateViewController(
             withIdentifier: "ShowDetailsViewController"
-        )
-        let showDetailsViewControllerClass = ShowDetailsViewController.init(nibName: showDetailsViewController.nibName, bundle: bundle)
-        showDetailsViewControllerClass.showId = show.id
+        ) as! ShowDetailsViewController
+        
+        showDetailsViewController.showId = show.id
+        showDetailsViewController.token = self.token
         self.navigationController?.pushViewController(showDetailsViewController, animated: true)
     }
 }
@@ -86,8 +89,13 @@ private extension HomeViewController {
         tableView.estimatedRowHeight = 110
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
-
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
 }
