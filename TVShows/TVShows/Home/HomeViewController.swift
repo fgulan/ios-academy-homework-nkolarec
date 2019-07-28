@@ -15,7 +15,6 @@ final class HomeViewController: UIViewController {
     //MARK: - Properties
     private var shows: [Show] = []
     var token: String = ""
-    var showId: String = ""
     
     // MARK: - Private UI
     @IBOutlet weak var tableView: UITableView!
@@ -34,18 +33,8 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let show = shows[indexPath.row]
-        print("Selected show: \(show)")
-
-        //TODO: make api call for requesting show details
-        let bundle = Bundle.main
-        let storyboard = UIStoryboard(name: "ShowDetails", bundle: bundle)
-        let showDetailsViewController = storyboard.instantiateViewController(
-            withIdentifier: "ShowDetailsViewController"
-        ) as! ShowDetailsViewController
-        
-        showDetailsViewController.showId = show.id
-        showDetailsViewController.token = self.token
-        self.navigationController?.pushViewController(showDetailsViewController, animated: true)
+        print("Selected show: \(show.id)")
+        _showDetails(showId: show.id)
     }
 }
 
@@ -62,13 +51,11 @@ extension HomeViewController: UITableViewDataSource {
         cell.configure(show: shows[indexPath.row])
         return cell
     }
-    
-    
 }
 
 //MARK: - Authorize user and set up UI
 private extension HomeViewController {
-    func setupTableView() {
+    private func setupTableView() {
         
         tableView.estimatedRowHeight = 110
         tableView.rowHeight = UITableView.automaticDimension
@@ -77,7 +64,7 @@ private extension HomeViewController {
         tableView.dataSource = self
     }
 
-    func _authorizeUser(){
+    private func _authorizeUser(){
         SVProgressHUD.show()
         let headers = ["Authorization": token]
         Alamofire
@@ -93,6 +80,46 @@ private extension HomeViewController {
                     self?.shows = shows
                     self?.setupTableView()
                     self?.tableView.reloadData()
+                case .failure(let error):
+                    print("API failure: \(error)")
+                    SVProgressHUD.showError(withStatus: "Error")
+                }
+                SVProgressHUD.dismiss()
+        }
+    }
+}
+
+//MARK: - Show details of the TV show
+private extension HomeViewController {
+    private func _showDetails(showId: String){
+        SVProgressHUD.show()
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "ShowDetails", bundle: bundle)
+        let showDetailsViewController = storyboard.instantiateViewController(
+            withIdentifier: "ShowDetailsViewController"
+            ) as! ShowDetailsViewController
+        showDetailsViewController.token = token
+        showDetailsViewController.showId = showId
+        
+        let parameters: [String: String] = [
+            "showId": showId,
+        ]
+        let headers: [String: String] = [
+            "Authorization": token,
+        ]
+        Alamofire
+            .request(
+                "https://api.infinum.academy/api/shows/" + showId,
+                method: .get,
+                parameters: parameters,
+                encoding: JSONEncoding.default,
+                headers: headers
+            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<ShowDetails>) in
+                switch response.result {
+                case .success(let showDetails):
+                    print("Success: \(showDetails)")
+                    SVProgressHUD.showSuccess(withStatus: "Success")
+                    self?.navigationController?.pushViewController(showDetailsViewController, animated: true)
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")

@@ -17,5 +17,6 @@ class ShowDetailsViewController: UIViewController {
     //MARK: Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
 }
