@@ -65,12 +65,10 @@ private extension LoginViewController {
     
     func _registerUserWith(email: String, password: String) {
         SVProgressHUD.show()
-        
         let parameters: [String: String] = [
             "email": email,
             "password": password
         ]
-        
         Alamofire
             .request(
                 "https://api.infinum.academy/api/users",
@@ -97,7 +95,6 @@ private extension LoginViewController {
     
     func _loginUserWith(email: String, password: String) {
         SVProgressHUD.show()
-        
         let parameters: [String: String] = [
             "email": email,
             "password": password

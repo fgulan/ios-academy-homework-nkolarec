@@ -10,6 +10,7 @@ import UIKit
 
 class ShowDetailsViewController: UIViewController {
 
+    //MARK: - Properties
     var showId: String = ""
     var token: String = ""
     

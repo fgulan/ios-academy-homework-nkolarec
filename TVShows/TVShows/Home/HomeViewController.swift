@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SVProgressHUD
 
 final class HomeViewController: UIViewController {
     
@@ -22,26 +23,8 @@ final class HomeViewController: UIViewController {
     //MARK: Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let headers = ["Authorization": token]
-        Alamofire
-            .request(
-                "https://api.infinum.academy/api/shows",
-                method: .get,
-                encoding: JSONEncoding.default,
-                headers: headers
-            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<[Show]>) in
-                switch response.result {
-                case .success(let shows):
-                    print("Success: \(shows)")
-                    self?.shows = shows
-                    self?.setupTableView()
-                    self?.tableView.reloadData()
-                case .failure(let error):
-                    print("API failure: \(error)")
-                    self?.showAlert(title: "API failure", message: "Cannot get list of shows")
-                }
-        }
+        SVProgressHUD.setDefaultMaskType(.black)
+        _authorizeUser()
     }
 }
 
@@ -75,7 +58,6 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         print("CURRENT INDEX PATH BEING CONFIGURED: \(indexPath)")
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ShowTableViewCell.self), for: indexPath) as! ShowTableViewCell
         cell.configure(show: shows[indexPath.row])
         return cell
@@ -83,6 +65,8 @@ extension HomeViewController: UITableViewDataSource {
     
     
 }
+
+//MARK: - Authorize user and set up UI
 private extension HomeViewController {
     func setupTableView() {
         
@@ -92,10 +76,28 @@ private extension HomeViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
+
+    func _authorizeUser(){
+        SVProgressHUD.show()
+        let headers = ["Authorization": token]
+        Alamofire
+            .request(
+                "https://api.infinum.academy/api/shows",
+                method: .get,
+                encoding: JSONEncoding.default,
+                headers: headers
+            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<[Show]>) in
+                switch response.result {
+                case .success(let shows):
+                    print("Success: \(shows)")
+                    self?.shows = shows
+                    self?.setupTableView()
+                    self?.tableView.reloadData()
+                case .failure(let error):
+                    print("API failure: \(error)")
+                    SVProgressHUD.showError(withStatus: "Error")
+                }
+                SVProgressHUD.dismiss()
+        }
     }
 }

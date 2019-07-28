@@ -13,6 +13,7 @@ final class ShowTableViewCell: UITableViewCell {
     // MARK: - Private UI
     @IBOutlet weak var title: UILabel!
     
+    //MARK: - Set up UI
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -25,7 +26,6 @@ final class ShowTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         title.text = nil
     }
 }
