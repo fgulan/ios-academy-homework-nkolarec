@@ -23,7 +23,6 @@ final class LoginViewController: UIViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
     }
@@ -62,7 +61,6 @@ final class LoginViewController: UIViewController {
 
 // MARK: - Register
 private extension LoginViewController {
-    
     func _registerUserWith(email: String, password: String) {
         SVProgressHUD.show()
         let parameters: [String: String] = [
@@ -92,7 +90,6 @@ private extension LoginViewController {
 
 // MARK: - Login
 private extension LoginViewController {
-    
     func _loginUserWith(email: String, password: String) {
         SVProgressHUD.show()
         let parameters: [String: String] = [

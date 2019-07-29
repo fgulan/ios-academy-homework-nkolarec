@@ -23,7 +23,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.setDefaultMaskType(.black)
-        _authorizeUser()
+        _authorizeUserWithListOfShows()
     }
 }
 
@@ -45,7 +45,6 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         print("CURRENT INDEX PATH BEING CONFIGURED: \(indexPath)")
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ShowTableViewCell.self), for: indexPath) as! ShowTableViewCell
         cell.configure(show: shows[indexPath.row])
@@ -55,8 +54,8 @@ extension HomeViewController: UITableViewDataSource {
 
 //MARK: - Authorize user and set up UI
 private extension HomeViewController {
+    
     private func setupTableView() {
-        
         tableView.estimatedRowHeight = 110
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
@@ -64,7 +63,7 @@ private extension HomeViewController {
         tableView.dataSource = self
     }
 
-    private func _authorizeUser(){
+    private func _authorizeUserWithListOfShows(){
         SVProgressHUD.show()
         let headers = ["Authorization": token]
         Alamofire
@@ -91,6 +90,7 @@ private extension HomeViewController {
 
 //MARK: - Show details of the TV show
 private extension HomeViewController {
+    
     private func _showDetails(showId: String){
         SVProgressHUD.show()
         let bundle = Bundle.main
@@ -118,8 +118,10 @@ private extension HomeViewController {
                 switch response.result {
                 case .success(let showDetails):
                     print("Success: \(showDetails)")
+                    
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     self?.navigationController?.pushViewController(showDetailsViewController, animated: true)
+                    
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
