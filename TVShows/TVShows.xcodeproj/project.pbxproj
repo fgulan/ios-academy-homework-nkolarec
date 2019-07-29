@@ -14,6 +14,8 @@
 		42113A5322E11D9900035472 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42113A5222E11D9900035472 /* HomeViewController.swift */; };
 		42113A5622E1352D00035472 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42113A5522E1352D00035472 /* User.swift */; };
 		42116B4A22EE59A700E3C9F7 /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42116B4922EE59A700E3C9F7 /* EpisodeTableViewCell.swift */; };
+		42116B4E22EE717F00E3C9F7 /* AddNewEpisode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42116B4D22EE717F00E3C9F7 /* AddNewEpisode.storyboard */; };
+		42116B5022EE71B700E3C9F7 /* AddNewEpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42116B4F22EE71B700E3C9F7 /* AddNewEpisodeViewController.swift */; };
 		424AB34622CE53DC0042C1D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424AB34522CE53DC0042C1D8 /* AppDelegate.swift */; };
 		424AB34D22CE53DD0042C1D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 424AB34C22CE53DD0042C1D8 /* Assets.xcassets */; };
 		424AB35022CE53DD0042C1D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424AB34E22CE53DD0042C1D8 /* LaunchScreen.storyboard */; };
@@ -33,6 +35,8 @@
 		42113A5222E11D9900035472 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		42113A5522E1352D00035472 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		42116B4922EE59A700E3C9F7 /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
+		42116B4D22EE717F00E3C9F7 /* AddNewEpisode.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddNewEpisode.storyboard; sourceTree = "<group>"; };
+		42116B4F22EE71B700E3C9F7 /* AddNewEpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewEpisodeViewController.swift; sourceTree = "<group>"; };
 		424AB34222CE53DC0042C1D8 /* TVShows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVShows.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		424AB34522CE53DC0042C1D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		424AB34C22CE53DD0042C1D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,6 +95,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		42116B4C22EE710900E3C9F7 /* Episode */ = {
+			isa = PBXGroup;
+			children = (
+				42116B4D22EE717F00E3C9F7 /* AddNewEpisode.storyboard */,
+				42116B4F22EE71B700E3C9F7 /* AddNewEpisodeViewController.swift */,
+			);
+			path = Episode;
+			sourceTree = "<group>";
+		};
 		424AB33922CE53DC0042C1D8 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +125,7 @@
 		424AB34422CE53DC0042C1D8 /* TVShows */ = {
 			isa = PBXGroup;
 			children = (
+				42116B4C22EE710900E3C9F7 /* Episode */,
 				42CB144222EDC73E0049DDBA /* Show */,
 				42113A5422E1349C00035472 /* Models */,
 				42113A4F22E11D2200035472 /* Home */,
@@ -212,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				424AB35022CE53DD0042C1D8 /* LaunchScreen.storyboard in Resources */,
+				42116B4E22EE717F00E3C9F7 /* AddNewEpisode.storyboard in Resources */,
 				424AB34D22CE53DD0042C1D8 /* Assets.xcassets in Resources */,
 				4207856D22D790E2000F1BA9 /* Login.storyboard in Resources */,
 				42CB144422EDC7760049DDBA /* ShowDetails.storyboard in Resources */,
@@ -277,6 +292,7 @@
 				42B42C1522ECE897002805C1 /* ShowTableViewCell.swift in Sources */,
 				42AC8FB222EBAFAE002898E4 /* Show.swift in Sources */,
 				42CB144622EDC79E0049DDBA /* ShowDetailsViewController.swift in Sources */,
+				42116B5022EE71B700E3C9F7 /* AddNewEpisodeViewController.swift in Sources */,
 				42113A5322E11D9900035472 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
