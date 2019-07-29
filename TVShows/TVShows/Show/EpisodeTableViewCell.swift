@@ -14,7 +14,7 @@ class EpisodeTableViewCell: UITableViewCell {
     @IBOutlet private weak var seasonNumberLabel: UILabel!
     @IBOutlet private weak var episodeNumberLabel: UILabel!
     @IBOutlet private weak var episodeTitleLabel: UILabel!
-    
+
     //MARK: - Set up UI
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +29,7 @@ class EpisodeTableViewCell: UITableViewCell {
         episodeTitleLabel.text = nil
         episodeNumberLabel.text = nil
         seasonNumberLabel.text =  nil
+        
     }
 }
 // MARK: - Configure

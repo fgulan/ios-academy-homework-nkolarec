@@ -27,12 +27,17 @@ class ShowDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
-        _listOfEpisodes()
     }
     
     //MARK: - Navigation
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     @IBAction func goBack(_ sender: UIButton) {
-        //go back to home screen
+        cleanPropertiesAndUI()
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -91,12 +96,14 @@ private extension ShowDetailsViewController {
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     self?.showTitleLabel.text = showDetails.title
                     self?.showDescriptionLabel.text = showDetails.description
+                    self?._listOfEpisodes()
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
                 }
                 SVProgressHUD.dismiss()
         }
+        
     }
     private func _listOfEpisodes(){
         SVProgressHUD.show()
@@ -114,15 +121,21 @@ private extension ShowDetailsViewController {
                 case .success(let episodes):
                     print("Success: \(episodes)")
                     self?.episodes = episodes
+                    self?.numberOfEpisodesLabel.text = String(episodes.count)
                     self?.setupTableView()
                     self?.tableView.reloadData()
-                    self?.numberOfEpisodesLabel.text = String(episodes.count)
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
                 }
                 SVProgressHUD.dismiss()
         }
+    }
+    
+    private func cleanPropertiesAndUI(){
+        self.episodes = []
+        self.showId = ""
+        self.token = ""
     }
 }
 
