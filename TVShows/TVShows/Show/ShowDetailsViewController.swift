@@ -29,10 +29,20 @@ class ShowDetailsViewController: UIViewController {
         setUpUI()
     }
     
-    //MARK: - Navigation
+    //MARK: - Navigation and Actions
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    @IBAction func addNewEpisode(_ sender: UIButton) {
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "AddNewEpisode", bundle: bundle)
+        let addEpViewController = storyboard.instantiateViewController(
+            withIdentifier: "AddNewEpisodeViewController"
+            ) as! AddNewEpisodeViewController
+        let navigationController = UINavigationController(rootViewController:
+            addEpViewController)
+        present(navigationController, animated: true)
     }
     
     @IBAction func goBack(_ sender: UIButton) {

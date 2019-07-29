@@ -153,6 +153,9 @@
                                 <rect key="frame" x="311" y="699" width="68" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="ic-fab-button"/>
+                                <connections>
+                                    <action selector="addNewEpisode:" destination="eGy-kr-y43" eventType="touchUpInside" id="ic4-TB-t6N"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iti-IF-AmW">
                                 <rect key="frame" x="32" y="90" width="32" height="32"/>

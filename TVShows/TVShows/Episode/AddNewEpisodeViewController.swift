@@ -10,21 +10,33 @@ import UIKit
 
 class AddNewEpisodeViewController: UIViewController {
 
+    //MARK: - Properties
+    var showId: String = ""
+    var token: String = ""
+    
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        navigationItem.title = "Add episode"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Add",
+            style: .plain,
+            target: self,
+            action: #selector(addNewShow)
+        )
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Cancel",
+            style: .plain,
+            target: self,
+            action: #selector(cancelAddingNewEpisode)
+        )
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc func addNewShow() {
+        // "Add show" API call
     }
-    */
-
+    @objc func cancelAddingNewEpisode() {
+        showId = ""
+        token = ""
+        navigationController?.dismiss(animated: true)
+    }
 }
