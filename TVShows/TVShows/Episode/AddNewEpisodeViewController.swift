@@ -10,11 +10,17 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 
+protocol AddNewEpisodeViewControllerDelegate: class {
+    func refreshListOfEpisodes(episode: Episode)
+}
+
 class AddNewEpisodeViewController: UIViewController {
 
     //MARK: - Properties
     var showId: String = ""
     var token: String = ""
+    weak var delegate: AddNewEpisodeViewControllerDelegate?
+
     
     //MARK: - Outlets
     @IBOutlet weak var epTitleTextField: UITextField!
@@ -82,7 +88,7 @@ class AddNewEpisodeViewController: UIViewController {
                 case .success(let episode):
                     print("Success: \(episode)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
-                    
+                    self?.delegate?.refreshListOfEpisodes(episode: episode)
                     self?.navigationController?.dismiss(animated: true)
                     
                 case .failure(let error):

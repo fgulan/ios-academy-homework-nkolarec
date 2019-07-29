@@ -34,6 +34,10 @@ class ShowDetailsViewController: UIViewController {
         super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let addNewEpViewController = segue.destination as! AddNewEpisodeViewController
+        addNewEpViewController.delegate = self
+    }
     @IBAction func addNewEpisode(_ sender: UIButton) {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "AddNewEpisode", bundle: bundle)
@@ -57,7 +61,7 @@ extension ShowDetailsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let episode = episodes[indexPath.row]
-        print("Selected episode: \(episode.id)")
+        print("Selected episode: \(episode)")
     }
 }
 
@@ -149,5 +153,11 @@ private extension ShowDetailsViewController {
         self.token = ""
     }
 }
+extension ShowDetailsViewController: AddNewEpisodeViewControllerDelegate {
+    func refreshListOfEpisodes(episode: Episode) {
+        _listOfEpisodes()
+    }
+}
+
 
 
