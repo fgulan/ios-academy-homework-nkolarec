@@ -33,7 +33,7 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let show = shows[indexPath.row]
-        print("Selected show: \(show.id)")
+        print("Selected show: \(show)")
         _showDetails(showId: show.id)
     }
 }

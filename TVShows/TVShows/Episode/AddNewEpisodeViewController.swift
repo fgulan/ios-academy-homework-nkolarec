@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SVProgressHUD
+import Alamofire
 
 class AddNewEpisodeViewController: UIViewController {
 
@@ -28,7 +30,7 @@ class AddNewEpisodeViewController: UIViewController {
             title: "Add",
             style: .plain,
             target: self,
-            action: #selector(addNewShow)
+            action: #selector(addNewEpisode)
         )
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "Cancel",
@@ -39,14 +41,64 @@ class AddNewEpisodeViewController: UIViewController {
     }
     
     //MARK: - Actions
-    @objc func addNewShow() {
-    }
     @objc func cancelAddingNewEpisode() {
         showId = ""
         token = ""
         navigationController?.dismiss(animated: true)
     }
+    @objc func addNewEpisode() {
+        guard
+            let episodeTitle = epTitleTextField.text,
+            let episodeSeasonNumber = seasonNumberTextfield.text,
+            let episodeNumber = epNumberTextfield.text,
+            let episodeDescription = epDescriptionTextField.text,
+            !episodeTitle.isEmpty,
+            !episodeSeasonNumber.isEmpty,
+            !episodeNumber.isEmpty,
+            !episodeDescription.isEmpty
+        else {
+            showAlert(title: "Add episode", message: "Fields must not be empty.")
+            return
+        }
+        let parameters: [String: String] = [
+            "showId": showId,
+            "title": episodeTitle,
+            "description": episodeDescription,
+            "imageUrl": "",
+            "episodeNumber": episodeNumber,
+            "season": episodeSeasonNumber
+        ]
+        let headers = ["Authorization": token]
+        Alamofire
+            .request(
+                "https://api.infinum.academy/api/episodes",
+                method: .post,
+                parameters: parameters,
+                encoding: JSONEncoding.default,
+                headers: headers)
+            .validate()
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<Episode>) in
+                switch response.result {
+                case .success(let episode):
+                    print("Success: \(episode)")
+                    SVProgressHUD.showSuccess(withStatus: "Success")
+                    
+                    self?.navigationController?.dismiss(animated: true)
+                    
+                case .failure(let error):
+                    print("API failure: \(error)")
+                    self?.showAlert(title: "Add episode", message: "Failed to add a new episode.")
+                }
+                SVProgressHUD.dismiss()
+            }
+    }
     @IBAction func uploadPhoto(_ sender: Any) {
         //for later
+    }
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
 }
