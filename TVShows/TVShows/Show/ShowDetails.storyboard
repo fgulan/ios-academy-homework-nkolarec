@@ -144,11 +144,16 @@
                                     <constraint firstAttribute="width" constant="320" id="ev4-TV-7Cg"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iti-IF-AmW">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1S8-Tw-3ku">
+                                <rect key="frame" x="40" y="700" width="320" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="ic-fab-button"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iti-IF-AmW">
                                 <rect key="frame" x="47" y="94" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Button" image="ic-navigate-back"/>
+                                <state key="normal" title="back" image="ic-navigate-back"/>
                                 <connections>
                                     <action selector="goBack:" destination="eGy-kr-y43" eventType="touchUpInside" id="Ho2-4i-adg"/>
                                 </connections>
@@ -175,6 +180,7 @@
     </scenes>
     <resources>
         <image name="ic-camera" width="24" height="24"/>
+        <image name="ic-fab-button" width="68" height="74"/>
         <image name="ic-navigate-back" width="32" height="32"/>
         <image name="ic-navigation-chevron-right-medium" width="24" height="24"/>
     </resources>
