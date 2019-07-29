@@ -14,6 +14,12 @@ class AddNewEpisodeViewController: UIViewController {
     var showId: String = ""
     var token: String = ""
     
+    //MARK: - Outlets
+    @IBOutlet weak var epTitleTextField: UITextField!
+    @IBOutlet weak var seasonNumberTextfield: UITextField!
+    @IBOutlet weak var epNumberTextfield: UITextField!
+    @IBOutlet weak var epDescriptionTextField: UITextField!
+    
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,12 +37,16 @@ class AddNewEpisodeViewController: UIViewController {
             action: #selector(cancelAddingNewEpisode)
         )
     }
+    
+    //MARK: - Actions
     @objc func addNewShow() {
-        // "Add show" API call
     }
     @objc func cancelAddingNewEpisode() {
         showId = ""
         token = ""
         navigationController?.dismiss(animated: true)
+    }
+    @IBAction func uploadPhoto(_ sender: Any) {
+        //for later
     }
 }

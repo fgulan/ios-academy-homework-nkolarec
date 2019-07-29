@@ -40,11 +40,12 @@ class ShowDetailsViewController: UIViewController {
         let addEpViewController = storyboard.instantiateViewController(
             withIdentifier: "AddNewEpisodeViewController"
             ) as! AddNewEpisodeViewController
+        addEpViewController.token = token
+        addEpViewController.showId = showId
         let navigationController = UINavigationController(rootViewController:
             addEpViewController)
         present(navigationController, animated: true)
     }
-    
     @IBAction func goBack(_ sender: UIButton) {
         cleanPropertiesAndUI()
         navigationController?.popViewController(animated: true)
