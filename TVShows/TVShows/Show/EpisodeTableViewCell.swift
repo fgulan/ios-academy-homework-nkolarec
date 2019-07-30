@@ -14,15 +14,6 @@ class EpisodeTableViewCell: UITableViewCell {
     @IBOutlet private weak var seasonNumberLabel: UILabel!
     @IBOutlet private weak var episodeNumberLabel: UILabel!
     @IBOutlet private weak var episodeTitleLabel: UILabel!
-
-    //MARK: - Set up UI
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -42,7 +33,7 @@ extension EpisodeTableViewCell {
     }
 }
 
-// MARK: - Private
+// MARK: - UI  set up
 private extension ShowTableViewCell {
     func setupUI() {
         //for later

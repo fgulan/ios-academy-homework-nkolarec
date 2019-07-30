@@ -13,17 +13,6 @@ final class ShowTableViewCell: UITableViewCell {
     // MARK: - Private UI
     @IBOutlet private weak var title: UILabel!
     
-    //MARK: - Set up UI
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setupUI()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        setupUI()
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         title.text = nil

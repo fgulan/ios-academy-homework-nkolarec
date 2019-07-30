@@ -31,25 +31,11 @@ class AddNewEpisodeViewController: UIViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Add episode"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Add",
-            style: .plain,
-            target: self,
-            action: #selector(addNewEpisode)
-        )
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Cancel",
-            style: .plain,
-            target: self,
-            action: #selector(cancelAddingNewEpisode)
-        )
+        setUpNavigationBar()
     }
     
     //MARK: - Actions
     @objc func cancelAddingNewEpisode() {
-        showId = ""
-        token = ""
         navigationController?.dismiss(animated: true)
     }
     @objc func addNewEpisode() {
@@ -88,12 +74,14 @@ class AddNewEpisodeViewController: UIViewController {
                 case .success(let episode):
                     print("Success: \(episode)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
-                    self?.delegate?.refreshListOfEpisodes(episode: episode)
-                    self?.navigationController?.dismiss(animated: true)
+                    guard let self = self else { return }
+                    self.delegate?.refreshListOfEpisodes(episode: episode)
+                    self.navigationController?.dismiss(animated: true)
                     
                 case .failure(let error):
                     print("API failure: \(error)")
-                    self?.showAlert(title: "Add episode", message: "Failed to add a new episode.")
+                    guard let self = self else { return }
+                    self.showAlert(title: "Add episode", message: "Failed to add a new episode.")
                 }
                 SVProgressHUD.dismiss()
             }
@@ -101,10 +89,23 @@ class AddNewEpisodeViewController: UIViewController {
     @IBAction func uploadPhoto(_ sender: Any) {
         //for later
     }
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
+}
+
+//MARK: - Navigation bar set up
+private extension AddNewEpisodeViewController {
+    private func setUpNavigationBar(){
+        navigationItem.title = "Add episode"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+        title: "Add",
+        style: .plain,
+        target: self,
+        action: #selector(addNewEpisode)
+        )
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+        title: "Cancel",
+        style: .plain,
+        target: self,
+        action: #selector(cancelAddingNewEpisode)
+        )
     }
 }

@@ -23,7 +23,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.setDefaultMaskType(.black)
-        _authorizeUserWithListOfShows()
+        _loadShows()
     }
 }
 
@@ -63,7 +63,7 @@ private extension HomeViewController {
         tableView.dataSource = self
     }
 
-    private func _authorizeUserWithListOfShows(){
+    private func _loadShows(){
         SVProgressHUD.show()
         let headers = ["Authorization": token]
         Alamofire
@@ -76,9 +76,10 @@ private extension HomeViewController {
                 switch response.result {
                 case .success(let shows):
                     print("Success: \(shows)")
-                    self?.shows = shows
-                    self?.setupTableView()
-                    self?.tableView.reloadData()
+                    guard let self = self else { return }
+                    self.shows = shows
+                    self.setupTableView()
+                    self.tableView.reloadData()
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
@@ -88,45 +89,17 @@ private extension HomeViewController {
     }
 }
 
-//MARK: - Show details of the TV show
+//MARK: - Navigate to show details of the TV show
 private extension HomeViewController {
     
     private func _showDetails(showId: String){
-        SVProgressHUD.show()
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "ShowDetails", bundle: bundle)
         let showDetailsViewController = storyboard.instantiateViewController(
             withIdentifier: "ShowDetailsViewController"
             ) as! ShowDetailsViewController
-        showDetailsViewController.token = token
+        navigationController?.pushViewController(showDetailsViewController, animated: true)
+        showDetailsViewController.token = self.token
         showDetailsViewController.showId = showId
-        
-        let parameters: [String: String] = [
-            "showId": showId,
-        ]
-        let headers: [String: String] = [
-            "Authorization": token,
-        ]
-        Alamofire
-            .request(
-                "https://api.infinum.academy/api/shows/" + showId,
-                method: .get,
-                parameters: parameters,
-                encoding: JSONEncoding.default,
-                headers: headers
-            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<ShowDetails>) in
-                switch response.result {
-                case .success(let showDetails):
-                    print("Success: \(showDetails)")
-                    
-                    SVProgressHUD.showSuccess(withStatus: "Success")
-                    self?.navigationController?.pushViewController(showDetailsViewController, animated: true)
-                    
-                case .failure(let error):
-                    print("API failure: \(error)")
-                    SVProgressHUD.showError(withStatus: "Error")
-                }
-                SVProgressHUD.dismiss()
-        }
     }
 }

@@ -30,9 +30,9 @@ class ShowDetailsViewController: UIViewController {
     }
     
     //MARK: - Navigation and Actions
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let addNewEpViewController = segue.destination as! AddNewEpisodeViewController
@@ -66,11 +66,9 @@ extension ShowDetailsViewController: UITableViewDelegate {
 }
 
 extension ShowDetailsViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodes.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("CURRENT INDEX PATH BEING CONFIGURED: \(indexPath)")
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: EpisodeTableViewCell.self), for: indexPath) as! EpisodeTableViewCell
@@ -81,7 +79,6 @@ extension ShowDetailsViewController: UITableViewDataSource {
 
 //MARK: - Set up UI
 private extension ShowDetailsViewController {
-    
     private func setupTableView() {
         tableView.estimatedRowHeight = 110
         tableView.rowHeight = UITableView.automaticDimension
@@ -89,14 +86,9 @@ private extension ShowDetailsViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
     private func setUpUI(){
-        let parameters: [String: String] = [
-            "showId": showId,
-        ]
-        let headers: [String: String] = [
-            "Authorization": token,
-        ]
+        let parameters = ["showId": showId]
+        let headers = ["Authorization": token]
         Alamofire
             .request(
                 "https://api.infinum.academy/api/shows/" + showId,
@@ -108,10 +100,11 @@ private extension ShowDetailsViewController {
                 switch response.result {
                 case .success(let showDetails):
                     print("Success: \(showDetails)")
+                    guard let self = self else { return }
                     SVProgressHUD.showSuccess(withStatus: "Success")
-                    self?.showTitleLabel.text = showDetails.title
-                    self?.showDescriptionLabel.text = showDetails.description
-                    self?._listOfEpisodes()
+                    self.showTitleLabel.text = showDetails.title
+                    self.showDescriptionLabel.text = showDetails.description
+                    self._loadEpisodes()
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
@@ -120,7 +113,7 @@ private extension ShowDetailsViewController {
         }
         
     }
-    private func _listOfEpisodes(){
+    private func _loadEpisodes(){
         SVProgressHUD.show()
         let parameters = ["showId": showId]
         let headers = ["Authorization": token]
@@ -135,10 +128,11 @@ private extension ShowDetailsViewController {
                 switch response.result {
                 case .success(let episodes):
                     print("Success: \(episodes)")
-                    self?.episodes = episodes
-                    self?.numberOfEpisodesLabel.text = String(episodes.count)
-                    self?.setupTableView()
-                    self?.tableView.reloadData()
+                    guard let self = self else { return }
+                    self.episodes = episodes
+                    self.numberOfEpisodesLabel.text = String(episodes.count)
+                    self.setupTableView()
+                    self.tableView.reloadData()
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
@@ -155,7 +149,7 @@ private extension ShowDetailsViewController {
 }
 extension ShowDetailsViewController: AddNewEpisodeDelegate {
     func refreshListOfEpisodes(episode: Episode) {
-        _listOfEpisodes()
+        _loadEpisodes()
     }
 }
 

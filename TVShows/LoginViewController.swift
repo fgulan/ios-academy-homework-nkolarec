@@ -78,10 +78,12 @@ private extension LoginViewController {
                 switch response.result {
                 case .success(let user):
                     print("Success: \(user)")
-                    self?._loginUserWith(email: email, password: password)
+                    guard let self = self else { return }
+                    self._loginUserWith(email: email, password: password)
                 case .failure(let error):
                     print("API failure: \(error)")
-                    self?.showAlert(title: "Register", message: "Failed to register.")
+                    guard let self = self else { return }
+                    self.showAlert(title: "Register", message: "Failed to register.")
                 }
         SVProgressHUD.dismiss()
         }
@@ -108,23 +110,27 @@ private extension LoginViewController {
                 case .success(let logInData):
                     print("Success: \(logInData.token)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
- 
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Home", bundle: bundle)
                     let homeViewController = storyboard.instantiateViewController(
                         withIdentifier: "HomeViewController"
                     ) as! HomeViewController
                     homeViewController.token = logInData.token
-                    self?.navigationController?.setViewControllers([homeViewController], animated: true)
+                    guard let self = self else { return }
+                    self.navigationController?.setViewControllers([homeViewController], animated: true)
                     
                 case .failure(let error):
                     print("API failure: \(error)")
-                    self?.showAlert(title: "Login", message: "Failed to login.")
+                    guard let self = self else { return }
+                    self.showAlert(title: "Login", message: "Failed to login.")
                 }
         SVProgressHUD.dismiss()
         }
     }
-    
+}
+
+//MARK: - Showing a custom alert dialog on error
+extension UIViewController {
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
