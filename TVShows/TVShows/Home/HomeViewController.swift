@@ -17,7 +17,7 @@ final class HomeViewController: UIViewController {
     var token: String = ""
     
     // MARK: - Private UI
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     //MARK: Lifecycle methods
     override func viewDidLoad() {

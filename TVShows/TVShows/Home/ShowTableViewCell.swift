@@ -11,7 +11,7 @@ import UIKit
 final class ShowTableViewCell: UITableViewCell {
 
     // MARK: - Private UI
-    @IBOutlet weak var title: UILabel!
+    @IBOutlet private weak var title: UILabel!
     
     //MARK: - Set up UI
     override func awakeFromNib() {

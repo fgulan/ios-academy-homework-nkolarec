@@ -18,10 +18,10 @@ class ShowDetailsViewController: UIViewController {
     private var episodes: [Episode] = []
     
     //MARK: - Private UI
-    @IBOutlet weak var showTitleLabel: UILabel!
-    @IBOutlet weak var showDescriptionLabel: UILabel!
-    @IBOutlet weak var numberOfEpisodesLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var showTitleLabel: UILabel!
+    @IBOutlet private weak var showDescriptionLabel: UILabel!
+    @IBOutlet private weak var numberOfEpisodesLabel: UILabel!
+    @IBOutlet private weak var tableView: UITableView!
     
     //MARK: Lifecycle methods
     override func viewDidLoad() {
@@ -153,7 +153,7 @@ private extension ShowDetailsViewController {
         self.token = ""
     }
 }
-extension ShowDetailsViewController: AddNewEpisodeViewControllerDelegate {
+extension ShowDetailsViewController: AddNewEpisodeDelegate {
     func refreshListOfEpisodes(episode: Episode) {
         _listOfEpisodes()
     }

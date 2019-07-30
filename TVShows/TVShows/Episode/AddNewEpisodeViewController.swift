@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 
-protocol AddNewEpisodeViewControllerDelegate: class {
+protocol AddNewEpisodeDelegate: class {
     func refreshListOfEpisodes(episode: Episode)
 }
 
@@ -19,14 +19,14 @@ class AddNewEpisodeViewController: UIViewController {
     //MARK: - Properties
     var showId: String = ""
     var token: String = ""
-    weak var delegate: AddNewEpisodeViewControllerDelegate?
+    weak var delegate: AddNewEpisodeDelegate?
 
     
     //MARK: - Outlets
-    @IBOutlet weak var epTitleTextField: UITextField!
-    @IBOutlet weak var seasonNumberTextfield: UITextField!
-    @IBOutlet weak var epNumberTextfield: UITextField!
-    @IBOutlet weak var epDescriptionTextField: UITextField!
+    @IBOutlet private weak var epTitleTextField: UITextField!
+    @IBOutlet private weak var seasonNumberTextfield: UITextField!
+    @IBOutlet private weak var epNumberTextfield: UITextField!
+    @IBOutlet private weak var epDescriptionTextField: UITextField!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
