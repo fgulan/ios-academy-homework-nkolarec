@@ -13,33 +13,20 @@ import CodableAlamofire
 
 final class LoginViewController: UIViewController {
     
-    //MARK: - Outlets
+    //MARK: - Private UI
     @IBOutlet private weak var usernameTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var checkButton: UIButton!
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
     
-    //MARK: - Properties
-    let alertEmptyFields = UIAlertController(title: "Sign in", message: "Fields must not be empty", preferredStyle: .alert)
-    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-        //...
-    }
-    
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.logInButton.layer.cornerRadius = 5
-        self.alertEmptyFields.addAction(cancelAction)
         SVProgressHUD.setDefaultMaskType(.black)
-        
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
+
     //MARK: - Actions
     @IBAction private func rememberMeChecked(_ sender: UIButton) {
         checkButton.isSelected.toggle()
@@ -52,7 +39,7 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
         else {
-            self.present(alertEmptyFields, animated: true)
+            showAlert(title: "Register", message: "Fields must not be empty")
             return
         }
         _registerUserWith(email: username, password: password)
@@ -65,7 +52,7 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
             else {
-                self.present(alertEmptyFields, animated: true)
+                showAlert(title: "Login", message: "Fields must not be empty")
                 return
         }
         _loginUserWith(email: username, password: password)
@@ -74,15 +61,12 @@ final class LoginViewController: UIViewController {
 
 // MARK: - Register
 private extension LoginViewController {
-    
     func _registerUserWith(email: String, password: String) {
         SVProgressHUD.show()
-        
         let parameters: [String: String] = [
             "email": email,
             "password": password
         ]
-        
         Alamofire
             .request(
                 "https://api.infinum.academy/api/users",
@@ -94,22 +78,22 @@ private extension LoginViewController {
                 switch response.result {
                 case .success(let user):
                     print("Success: \(user)")
-                    self?._loginUserWith(email: email, password: password)
+                    guard let self = self else { return }
+                    self._loginUserWith(email: email, password: password)
                 case .failure(let error):
                     print("API failure: \(error)")
+                    guard let self = self else { return }
+                    self.showAlert(title: "Register", message: "Failed to register.")
                 }
         SVProgressHUD.dismiss()
         }
     }
-    
 }
 
 // MARK: - Login
 private extension LoginViewController {
-    
     func _loginUserWith(email: String, password: String) {
         SVProgressHUD.show()
-        
         let parameters: [String: String] = [
             "email": email,
             "password": password
@@ -121,25 +105,36 @@ private extension LoginViewController {
                 parameters: parameters,
                 encoding: JSONEncoding.default)
             .validate()
-            .responseJSON { [weak self] dataResponse in
-                switch dataResponse.result {
-                case .success(let response):
-                    print("Success: \(response)")
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<LoginData>) in
+                switch response.result {
+                case .success(let logInData):
+                    print("Success: \(logInData.token)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
-                    
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Home", bundle: bundle)
                     let homeViewController = storyboard.instantiateViewController(
                         withIdentifier: "HomeViewController"
-                    )
-                    self?.navigationController?.pushViewController(homeViewController, animated: true)
+                    ) as! HomeViewController
+                    homeViewController.token = logInData.token
+                    guard let self = self else { return }
+                    self.navigationController?.setViewControllers([homeViewController], animated: true)
                     
                 case .failure(let error):
                     print("API failure: \(error)")
-                    SVProgressHUD.showError(withStatus: "Failure")
+                    guard let self = self else { return }
+                    self.showAlert(title: "Login", message: "Failed to login.")
                 }
         SVProgressHUD.dismiss()
         }
     }
-    
+}
+
+//MARK: - Showing a custom alert dialog on error
+extension UIViewController {
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
 }
