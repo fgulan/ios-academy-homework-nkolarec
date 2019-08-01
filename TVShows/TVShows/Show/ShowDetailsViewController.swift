@@ -46,11 +46,11 @@ class ShowDetailsViewController: UIViewController {
         let addEpViewController = storyboard.instantiateViewController(
             withIdentifier: "AddNewEpisodeViewController"
             ) as! AddNewEpisodeViewController
-        addEpViewController.token = token
-        addEpViewController.showId = showId
         let navigationController = UINavigationController(rootViewController:
             addEpViewController)
         present(navigationController, animated: true)
+        addEpViewController.token = token
+        addEpViewController.showId = showId
     }
     @IBAction func goBack(_ sender: UIButton) {
         cleanPropertiesAndUI()
@@ -64,6 +64,14 @@ extension ShowDetailsViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let episode = episodes[indexPath.row]
         print("Selected episode: \(episode)")
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "EpisodeDetails", bundle: bundle)
+        let epDetailsViewController = storyboard.instantiateViewController(
+            withIdentifier: "EpisodeDetailsViewController"
+            ) as! EpisodeDetailsViewController
+        navigationController?.pushViewController(epDetailsViewController, animated: true)
+        epDetailsViewController.token = token
+        epDetailsViewController.showId = showId
     }
 }
 

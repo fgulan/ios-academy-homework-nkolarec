@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Add New Episode View Controller-->
+        <!--Add New Episode-->
         <scene sceneID="iVe-kN-M9f">
             <objects>
-                <viewController storyboardIdentifier="AddNewEpisodeViewController" id="2fq-3X-jsV" customClass="AddNewEpisodeViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddNewEpisodeViewController" title="Add New Episode" id="2fq-3X-jsV" customClass="AddNewEpisodeViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uPk-jo-f3a">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

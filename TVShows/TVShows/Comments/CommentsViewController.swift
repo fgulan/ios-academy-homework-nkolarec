@@ -10,21 +10,25 @@ import UIKit
 
 class CommentsViewController: UIViewController {
 
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpNavigationBar()
+    }
+}
 
-        // Do any additional setup after loading the view.
+//MARK: - Set up UI
+private extension CommentsViewController {
+    private func setUpNavigationBar(){
+        navigationItem.rightBarButtonItem = UIBarButtonItem.init(
+            image: UIImage(named: "ic-navigate-back"),
+            style: .plain,
+            target: self,
+            action: #selector(goBack)
+        )
+    }
+    @objc func goBack() {
+        navigationController?.dismiss(animated: true)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
