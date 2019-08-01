@@ -23,13 +23,17 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.setDefaultMaskType(.black)
+        setUpNavigationBar()
         _loadShows()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
 
 // MARK: - UITableView
 extension HomeViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let show = shows[indexPath.row]
@@ -43,13 +47,10 @@ extension HomeViewController: UITableViewDelegate {
         }
     }
 }
-
 extension HomeViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shows.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("CURRENT INDEX PATH BEING CONFIGURED: \(indexPath)")
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ShowTableViewCell.self), for: indexPath) as! ShowTableViewCell
@@ -60,15 +61,29 @@ extension HomeViewController: UITableViewDataSource {
 
 //MARK: - Authorize user and set up UI
 private extension HomeViewController {
-    
+    private func setUpNavigationBar(){
+        navigationItem.title = "Shows"
+        let logoutItem = UIBarButtonItem.init(
+            image: UIImage(imageLiteralResourceName: "ic-logout"),
+            style: .plain,
+            target: self,
+            action: #selector(_logout))
+        navigationItem.leftBarButtonItem = logoutItem
+        let toggleViewItem = UIBarButtonItem.init(
+            image: UIImage(imageLiteralResourceName: "ic-gridview"),
+            style: .plain,
+            target: self,
+            action: #selector(_toggleView))
+        navigationItem.rightBarButtonItem = toggleViewItem
+    }
     private func setupTableView() {
-        tableView.estimatedRowHeight = 110
-        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 120
+        tableView.rowHeight = 120
+        tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
     }
-
     private func _loadShows(){
         SVProgressHUD.show()
         let headers = ["Authorization": token]
@@ -95,9 +110,29 @@ private extension HomeViewController {
     }
 }
 
+//MARK: - Log out user or change view
+private extension HomeViewController {
+    @objc private func _logout() {
+        // clear User defaults
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "Login", bundle: bundle)
+        let logInViewController = storyboard.instantiateViewController(
+            withIdentifier: "LoginViewController"
+            ) as! LoginViewController
+        navigationController?.setViewControllers([logInViewController], animated: true)
+    }
+    @objc private func _toggleView() {
+        if navigationItem.rightBarButtonItem?.image == UIImage(imageLiteralResourceName: "ic-gridview"){
+            navigationItem.rightBarButtonItem?.image = UIImage(imageLiteralResourceName: "ic-listview")
+        } else {
+            navigationItem.rightBarButtonItem?.image = UIImage(imageLiteralResourceName: "ic-gridview")
+        }
+        //change view
+    }
+}
+
 //MARK: - Navigate to show details of the TV show
 private extension HomeViewController {
-    
     private func _showDetails(showId: String){
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "ShowDetails", bundle: bundle)

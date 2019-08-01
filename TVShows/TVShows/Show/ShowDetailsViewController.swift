@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import Alamofire
+import Kingfisher
 
 class ShowDetailsViewController: UIViewController {
 
@@ -22,6 +23,7 @@ class ShowDetailsViewController: UIViewController {
     @IBOutlet private weak var showDescriptionLabel: UILabel!
     @IBOutlet private weak var numberOfEpisodesLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet weak var showImage: UIImageView!
     
     //MARK: Lifecycle methods
     override func viewDidLoad() {
@@ -31,8 +33,8 @@ class ShowDetailsViewController: UIViewController {
     
     //MARK: - Navigation and Actions
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let addNewEpViewController = segue.destination as! AddNewEpisodeViewController
@@ -104,6 +106,8 @@ private extension ShowDetailsViewController {
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     self.showTitleLabel.text = showDetails.title
                     self.showDescriptionLabel.text = showDetails.description
+                    let url = URL(string: "https://api.infinum.academy//" + showDetails.imageUrl)
+                    self.showImage.kf.setImage(with: url)
                     self._loadEpisodes()
                 case .failure(let error):
                     print("API failure: \(error)")

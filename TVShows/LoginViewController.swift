@@ -31,7 +31,6 @@ final class LoginViewController: UIViewController {
     @IBAction private func rememberMeChecked(_ sender: UIButton) {
         checkButton.isSelected.toggle()
     }
-        
     @IBAction private func registerUser(_ sender: UIButton) {
         guard
             let username = usernameTextField.text,
@@ -44,7 +43,6 @@ final class LoginViewController: UIViewController {
         }
         _registerUserWith(email: username, password: password)
     }
-    
     @IBAction private func logInUser(_ sender: Any) {
         guard
             let username = usernameTextField.text,
@@ -59,7 +57,7 @@ final class LoginViewController: UIViewController {
     }
 }
 
-// MARK: - Register
+// MARK: - Register user
 private extension LoginViewController {
     func _registerUserWith(email: String, password: String) {
         SVProgressHUD.show()
@@ -90,7 +88,7 @@ private extension LoginViewController {
     }
 }
 
-// MARK: - Login
+// MARK: - Login user
 private extension LoginViewController {
     func _loginUserWith(email: String, password: String) {
         SVProgressHUD.show()
