@@ -106,7 +106,9 @@ private extension ShowDetailsViewController {
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     self.showTitleLabel.text = showDetails.title
                     self.showDescriptionLabel.text = showDetails.description
-                    let url = URL(string: "https://api.infinum.academy//" + showDetails.imageUrl)
+                    guard
+                        let url = URL(string: "https://api.infinum.academy//" + showDetails.imageUrl)
+                    else { return }
                     self.showImage.kf.setImage(with: url)
                     self._loadEpisodes()
                 case .failure(let error):

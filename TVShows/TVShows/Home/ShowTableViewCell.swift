@@ -26,7 +26,8 @@ final class ShowTableViewCell: UITableViewCell {
 extension ShowTableViewCell {
     func configure(show: Show) {
         title.text = show.title
-        let url = URL(string: "https://api.infinum.academy" + show.imageUrl)
+        guard let url = URL(string: "https://api.infinum.academy" + show.imageUrl)
+        else { return }
         showImage.kf.setImage(with: url)
     }
 }

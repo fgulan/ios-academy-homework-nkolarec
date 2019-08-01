@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import CodableAlamofire
+import KeychainAccess
 
 final class LoginViewController: UIViewController {
     
@@ -19,6 +20,9 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var checkButton: UIButton!
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
+    
+    //MARK: - Properties
+    let keychain = Keychain(service: "")
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -134,5 +138,11 @@ extension UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alert.addAction(cancelAction)
         present(alert, animated: true)
+    }
+}
+
+//MARK: - Save user's credentials
+private extension LoginViewController {
+    private func rememberPassword(user: User){
     }
 }
