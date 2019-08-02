@@ -10,7 +10,7 @@ import UIKit
 
 class EpisodeTableViewCell: UITableViewCell {
 
-    // MARK: - Private UI
+    // MARK: - Outlets
     @IBOutlet private weak var seasonNumberLabel: UILabel!
     @IBOutlet private weak var episodeNumberLabel: UILabel!
     @IBOutlet private weak var episodeTitleLabel: UILabel!
@@ -20,23 +20,14 @@ class EpisodeTableViewCell: UITableViewCell {
         episodeTitleLabel.text = nil
         episodeNumberLabel.text = nil
         seasonNumberLabel.text =  nil
-        
     }
 }
 // MARK: - Configure
 extension EpisodeTableViewCell {
-    
     func configure(episode: Episode) {
         episodeTitleLabel.text = episode.title
         episodeNumberLabel.text = episode.episodeNumber
         seasonNumberLabel.text =  episode.season
-    }
-}
-
-// MARK: - UI  set up
-private extension ShowTableViewCell {
-    func setupUI() {
-        //for later
     }
 }
 

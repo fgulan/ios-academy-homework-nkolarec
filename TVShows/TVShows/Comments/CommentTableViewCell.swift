@@ -10,12 +10,21 @@ import UIKit
 
 class CommentTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    @IBOutlet private weak var commentImage: UIImageView!
+    @IBOutlet private weak var usernameLabel: UILabel!
+    @IBOutlet private weak var commentLabel: UILabel!
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        commentLabel.text = nil
+        usernameLabel.text = nil
+        commentImage.image = nil
     }
+}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+// MARK: - Configure
+extension CommentTableViewCell {
+    func configure(comment: Comment) {
+        commentLabel.text = comment.text
+        usernameLabel.text = comment.email
     }
-
 }

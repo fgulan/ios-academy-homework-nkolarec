@@ -7,18 +7,81 @@
 //
 
 import UIKit
+import Alamofire
+import CodableAlamofire
+import Kingfisher
+import SVProgressHUD
 
 class EpisodeDetailsViewController: UIViewController {
 
+    //MARK: - Outlets
+    @IBOutlet private weak var episodeImage: UIImageView!
+    @IBOutlet private weak var episodeTitle: UILabel!
+    @IBOutlet private weak var seasonNumber: UILabel!
+    @IBOutlet private weak var episodeNumber: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
     //MARK: - Properties
-    var showId: String = ""
+    var episodeId: String = ""
     var token: String = ""
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        _loadEpisodeDetails()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    //MARK: Actions
+    @IBAction func goToComments(_ sender: UIButton) {
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "Comments", bundle: bundle)
+        let commentsViewController = storyboard.instantiateViewController(
+            withIdentifier: "CommentsViewController"
+            ) as! CommentsViewController
+        let navigationController = UINavigationController(rootViewController:
+            commentsViewController)
+        present(navigationController, animated: true)
+        commentsViewController.episodeId = episodeId
+    }
+    @IBAction func goBack(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
+}
+private extension EpisodeDetailsViewController {
+    private func _loadEpisodeDetails(){
+        SVProgressHUD.show()
+        let parameters = ["episodeId": episodeId]
+        let headers = ["Authorization": token]
+        Alamofire
+            .request(
+                "https://api.infinum.academy/api/episodes/" + episodeId,
+                method: .get,
+                parameters: parameters,
+                encoding: JSONEncoding.default,
+                headers: headers
+            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<Episode>) in
+                switch response.result {
+                case .success(let episodeDetails):
+                    print("Success: \(episodeDetails)")
+                    SVProgressHUD.showSuccess(withStatus: "Success")
+                    guard let self = self else { return }
+                    self.episodeTitle.text = episodeDetails.title
+                    self.seasonNumber.text = episodeDetails.season
+                    self.episodeNumber.text = episodeDetails.episodeNumber
+                    self.descriptionLabel.text = episodeDetails.description
+                    guard
+                        let url = URL(string: "https://api.infinum.academy//" + episodeDetails.imageUrl)
+                    else { return }
+                    self.episodeImage.kf.setImage(with: url)
+                case .failure(let error):
+                    print("API failure: \(error)")
+                    SVProgressHUD.showError(withStatus: "Error")
+                }
+                SVProgressHUD.dismiss()
+        }
     }
 }

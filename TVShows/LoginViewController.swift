@@ -67,7 +67,7 @@ final class LoginViewController: UIViewController {
 
 // MARK: - Register user
 private extension LoginViewController {
-    func _registerUserWith(email: String, password: String) {
+    func _registerUserWith(email: String, password: String){
         SVProgressHUD.show()
         let parameters: [String: String] = [
             "email": email,

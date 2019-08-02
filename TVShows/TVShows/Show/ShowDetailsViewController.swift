@@ -28,7 +28,7 @@ class ShowDetailsViewController: UIViewController {
     //MARK: Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpUI()
+        _loadShowDetails()
     }
     
     //MARK: - Navigation and Actions
@@ -71,7 +71,7 @@ extension ShowDetailsViewController: UITableViewDelegate {
             ) as! EpisodeDetailsViewController
         navigationController?.pushViewController(epDetailsViewController, animated: true)
         epDetailsViewController.token = token
-        epDetailsViewController.showId = showId
+        epDetailsViewController.episodeId = episode.id
     }
 }
 
@@ -96,7 +96,8 @@ private extension ShowDetailsViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    private func setUpUI(){
+    private func _loadShowDetails(){
+        SVProgressHUD.show()
         let parameters = ["showId": showId]
         let headers = ["Authorization": token]
         Alamofire
@@ -110,8 +111,8 @@ private extension ShowDetailsViewController {
                 switch response.result {
                 case .success(let showDetails):
                     print("Success: \(showDetails)")
-                    guard let self = self else { return }
                     SVProgressHUD.showSuccess(withStatus: "Success")
+                    guard let self = self else { return }
                     self.showTitleLabel.text = showDetails.title
                     self.showDescriptionLabel.text = showDetails.description
                     guard

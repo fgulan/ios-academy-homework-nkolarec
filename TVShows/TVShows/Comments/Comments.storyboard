@@ -13,7 +13,7 @@
         <!--Comments-->
         <scene sceneID="s8i-OF-s4E">
             <objects>
-                <viewController title="Comments" id="GLS-xe-S9a" customClass="CommentsViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentsViewController" title="Comments" id="GLS-xe-S9a" customClass="CommentsViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h0E-yR-MdR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +25,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="680"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="9zw-Yy-BKT">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableViewCell" rowHeight="80" id="9zw-Yy-BKT" customClass="CommentTableViewCell" customModule="TVShows" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="320" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9zw-Yy-BKT" id="syx-el-2zd">
@@ -76,6 +76,11 @@
                                                         <constraint firstItem="jLg-uT-nxa" firstAttribute="leading" secondItem="syx-el-2zd" secondAttribute="leading" id="ebX-c8-ej6"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="commentImage" destination="E83-gP-YQN" id="N7d-G8-khQ"/>
+                                                    <outlet property="commentLabel" destination="v3m-Gm-0T0" id="13N-ZY-gdx"/>
+                                                    <outlet property="usernameLabel" destination="otk-Wb-w92" id="C7Z-Jm-6py"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
@@ -96,6 +101,9 @@
                                                 <state key="normal" title="Post">
                                                     <color key="titleColor" red="1" green="0.45882352939999999" blue="0.54901960780000003" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="postComment:" destination="GLS-xe-S9a" eventType="touchUpInside" id="K4O-Is-ReX"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -115,6 +123,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="o2r-ng-DAp"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="0zH-E1-ydt" id="5Jn-Hm-HCK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OX0-24-QoO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
