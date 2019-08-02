@@ -22,13 +22,17 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var createAccountButton: UIButton!
     
     //MARK: - Properties
-    let keychain = Keychain(service: "")
+    let keychainUsername = Keychain(service: "username")
+    let keychainPassword = Keychain(service: "password")
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.logInButton.layer.cornerRadius = 5
         SVProgressHUD.setDefaultMaskType(.black)
+        if keychainPassword.allKeys().count > 0 && keychainUsername.allKeys().count > 0 {
+            _loginUserAutomatically()
+        }
     }
 
     //MARK: - Actions
@@ -96,6 +100,9 @@ private extension LoginViewController {
 private extension LoginViewController {
     func _loginUserWith(email: String, password: String) {
         SVProgressHUD.show()
+        if checkButton.isSelected {
+            rememberPassword(email: email, password: password)
+        }
         let parameters: [String: String] = [
             "email": email,
             "password": password
@@ -141,8 +148,24 @@ extension UIViewController {
     }
 }
 
-//MARK: - Save user's credentials
+//MARK: - User's credentials
 private extension LoginViewController {
-    private func rememberPassword(user: User){
+    private func rememberPassword(email: String, password: String){
+        do {
+            try keychainUsername.set(email, key: "user")
+            try keychainPassword.set(password, key: "user")
+        } catch { print(error) }
+        
+    }
+    private func _loginUserAutomatically(){
+        do {
+            guard
+                let username = try keychainUsername.get("user"),
+                let password = try keychainPassword.get("user"),
+                !username.isEmpty,
+                !password.isEmpty
+            else { return }
+            _loginUserWith(email: username, password: password)
+        } catch { print(error) }
     }
 }

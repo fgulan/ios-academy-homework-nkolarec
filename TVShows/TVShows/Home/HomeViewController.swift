@@ -113,13 +113,15 @@ private extension HomeViewController {
 //MARK: - Log out user or change view
 private extension HomeViewController {
     @objc private func _logout() {
-        // clear User defaults
+        token = ""
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Login", bundle: bundle)
         let logInViewController = storyboard.instantiateViewController(
             withIdentifier: "LoginViewController"
             ) as! LoginViewController
         navigationController?.setViewControllers([logInViewController], animated: true)
+        logInViewController.keychainUsername["user"] = nil
+        logInViewController.keychainPassword["user"] = nil
     }
     @objc private func _toggleView() {
         if navigationItem.rightBarButtonItem?.image == UIImage(imageLiteralResourceName: "ic-gridview"){
