@@ -95,6 +95,12 @@ private extension ShowDetailsViewController {
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.tintColor = UIColor.gray
+        refreshControl.addTarget(self, action: #selector(refreshListOfEpisodes), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     private func _loadShowDetails(){
         SVProgressHUD.show()
@@ -129,7 +135,6 @@ private extension ShowDetailsViewController {
         
     }
     private func _loadEpisodes(){
-        SVProgressHUD.show()
         let parameters = ["showId": showId]
         let headers = ["Authorization": token]
         Alamofire
@@ -152,7 +157,6 @@ private extension ShowDetailsViewController {
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
                 }
-                SVProgressHUD.dismiss()
         }
     }
     
@@ -163,8 +167,9 @@ private extension ShowDetailsViewController {
     }
 }
 extension ShowDetailsViewController: AddNewEpisodeDelegate {
-    func refreshListOfEpisodes(episode: Episode) {
+    @objc func refreshListOfEpisodes() {
         _loadEpisodes()
+        tableView.refreshControl?.endRefreshing()
     }
 }
 

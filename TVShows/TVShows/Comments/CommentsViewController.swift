@@ -66,6 +66,13 @@ extension CommentsViewController: UITableViewDelegate {
 
 extension CommentsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if comments.count == 0 {
+            tableView.separatorStyle = .none
+            tableView.backgroundView?.isHidden = false
+        } else {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView?.isHidden = true
+        }
         return comments.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -76,11 +83,11 @@ extension CommentsViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - Set up UI
 private extension CommentsViewController {
     private func setupTableView() {
         tableView.estimatedRowHeight = 110
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self

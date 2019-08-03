@@ -11,7 +11,7 @@ import SVProgressHUD
 import Alamofire
 
 protocol AddNewEpisodeDelegate: class {
-    func refreshListOfEpisodes(episode: Episode)
+    func refreshListOfEpisodes()
 }
 
 class AddNewEpisodeViewController: UIViewController {
@@ -75,7 +75,7 @@ class AddNewEpisodeViewController: UIViewController {
                     print("Success: \(episode)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     guard let self = self else { return }
-                    self.delegate?.refreshListOfEpisodes(episode: episode)
+                    self.delegate?.refreshListOfEpisodes()
                     self.navigationController?.dismiss(animated: true)
                     
                 case .failure(let error):
