@@ -58,7 +58,8 @@ final class LoginViewController: UIViewController {
             !username.isEmpty,
             !password.isEmpty
             else {
-                showAlert(title: "Login", message: "Fields must not be empty")
+                animate(viewToShake: usernameTextField)
+                animate(viewToShake: passwordTextField)
                 return
         }
         _loginUserWith(email: username, password: password)
@@ -127,24 +128,14 @@ private extension LoginViewController {
                     homeViewController.token = logInData.token
                     guard let self = self else { return }
                     self.navigationController?.setViewControllers([homeViewController], animated: true)
-                    
                 case .failure(let error):
                     print("API failure: \(error)")
                     guard let self = self else { return }
-                    self.showAlert(title: "Login", message: "Failed to login.")
+                    self.animate(viewToShake: self.usernameTextField)
+                    self.animate(viewToShake: self.passwordTextField)
                 }
-        SVProgressHUD.dismiss()
+                SVProgressHUD.dismiss()
         }
-    }
-}
-
-//MARK: - Showing a custom alert dialog on error
-extension UIViewController {
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
     }
 }
 
@@ -164,8 +155,32 @@ private extension LoginViewController {
                 let password = try keychainPassword.get("user"),
                 !username.isEmpty,
                 !password.isEmpty
-            else { return }
+                else { return }
             _loginUserWith(email: username, password: password)
         } catch { print(error) }
     }
 }
+
+//MARK: - Custom alert dialog on error
+extension UIViewController {
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+}
+
+//MARK: - Shake animation
+extension UIViewController {
+    func animate(viewToShake: UITextField){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: viewToShake.center.x - 10, y: viewToShake.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: viewToShake.center.x + 10, y: viewToShake.center.y))
+        viewToShake.layer.add(animation, forKey: "position")
+    }
+}
+

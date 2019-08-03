@@ -49,7 +49,10 @@ class AddNewEpisodeViewController: UIViewController {
             !episodeNumber.isEmpty,
             !episodeDescription.isEmpty
         else {
-            showAlert(title: "Add episode", message: "Fields must not be empty.")
+            animate(viewToShake: epTitleTextField)
+            animate(viewToShake: seasonNumberTextfield)
+            animate(viewToShake: epNumberTextfield)
+            animate(viewToShake: epDescriptionTextField)
             return
         }
         let parameters: [String: String] = [
@@ -109,3 +112,4 @@ private extension AddNewEpisodeViewController {
         )
     }
 }
+
