@@ -19,6 +19,8 @@ class AddNewEpisodeViewController: UIViewController {
     //MARK: - Properties
     var showId: String = ""
     var token: String = ""
+    private var mediaId: String = ""
+    private let imagePicker = UIImagePickerController()
     weak var delegate: AddNewEpisodeDelegate?
 
     
@@ -27,11 +29,16 @@ class AddNewEpisodeViewController: UIViewController {
     @IBOutlet private weak var seasonNumberTextfield: UITextField!
     @IBOutlet private weak var epNumberTextfield: UITextField!
     @IBOutlet private weak var epDescriptionTextField: UITextField!
+    @IBOutlet private weak var episodeImage: UIImageView!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationBar()
+        imagePicker.delegate = self
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     //MARK: - Actions
@@ -90,7 +97,13 @@ class AddNewEpisodeViewController: UIViewController {
             }
     }
     @IBAction func uploadPhoto(_ sender: Any) {
-        //for later
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        navigationController?.present(imagePicker, animated: true)
+        guard let pickedImage = episodeImage.image else { return }
+        if pickedImage != UIImage(contentsOfFile: "ic-camera"){
+            _uploadImageOnAPI(pickedImage: pickedImage)
+        }
     }
 }
 
@@ -111,5 +124,64 @@ private extension AddNewEpisodeViewController {
         action: #selector(cancelAddingNewEpisode)
         )
     }
+}
+
+//MARK: - Pick an image from photo library
+extension AddNewEpisodeViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        else { return }
+        episodeImage.image = pickedImage
+        episodeImage.sizeToFit()
+        episodeImage.setNeedsDisplay()
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+//MARK: - Uploading image on episode
+private extension AddNewEpisodeViewController {
+    func _uploadImageOnAPI(pickedImage: UIImage) {
+        let headers = ["Authorization": token]
+        let imageByteData = pickedImage.pngData()!
+        Alamofire
+            .upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(
+                imageByteData,
+                withName: "file",
+                fileName: "image.png",
+                mimeType: "image/png")
+            }, to: "https://api.infinum.academy/api/media",
+               method: .post,
+               headers: headers)
+            { [weak self] result in
+                switch result {
+                case .success(let uploadRequest, _, _):
+                    guard let self = self else { return }
+                    self._processUploadRequest(uploadRequest)
+                case .failure(let encodingError):
+                    print("API failure: \(encodingError)")
+            }
+        }
+                
+    }
+    func _processUploadRequest(_ uploadRequest: UploadRequest) {
+        uploadRequest
+            .responseDecodableObject(keyPath: "data") { [weak self]
+            (response: DataResponse<Media>) in
+            switch response.result {
+            case .success(let media):
+                print("DECODED: \(media)")
+                print("Proceed to add episode call...")
+                guard let self = self else { return }
+                self.mediaId = media.id
+            case .failure(let error):
+                print("API failure: \(error)")
+            }
+        }
+    }
+
 }
 
