@@ -10,9 +10,14 @@ import UIKit
 
 class CommentTableViewCell: UITableViewCell {
 
+    //MARK: - Outlets
     @IBOutlet private weak var commentImage: UIImageView!
     @IBOutlet private weak var usernameLabel: UILabel!
     @IBOutlet private weak var commentLabel: UILabel!
+    
+    //MARK: - Properties
+    private var generator: Int = 0
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         commentLabel.text = nil
@@ -25,6 +30,16 @@ class CommentTableViewCell: UITableViewCell {
 extension CommentTableViewCell {
     func configure(comment: Comment) {
         commentLabel.text = comment.text
-        usernameLabel.text = comment.email
+        usernameLabel.text = comment.userEmail
+        generator = Int.random(in: 0 ... 10)
+        if generator % 3 == 1 {
+            commentImage.image = UIImage(contentsOfFile: "img-placeholder-user1")
+        }
+        else if generator % 3 == 2 {
+            commentImage.image = UIImage(contentsOfFile: "img-placeholder-user2")
+        } else {
+            commentImage.image = UIImage(contentsOfFile: "img-placeholder-user3")
+        }
+        commentImage.setNeedsDisplay()
     }
 }

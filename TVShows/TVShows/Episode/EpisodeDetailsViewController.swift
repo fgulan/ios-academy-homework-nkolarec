@@ -42,15 +42,16 @@ class EpisodeDetailsViewController: UIViewController {
         let commentsViewController = storyboard.instantiateViewController(
             withIdentifier: "CommentsViewController"
             ) as! CommentsViewController
-        let navigationController = UINavigationController(rootViewController:
-            commentsViewController)
-        present(navigationController, animated: true)
+        self.navigationController?.pushViewController(commentsViewController, animated: true)
         commentsViewController.episodeId = episodeId
     }
-    @IBAction func goBack(_ sender: UIButton) {
+    @IBAction func navigateBack(_ sender: UIButton) {
+        cleanPropertiesAndUI()
         navigationController?.popViewController(animated: true)
     }
 }
+
+//MARK: - Load episode details
 private extension EpisodeDetailsViewController {
     private func _loadEpisodeDetails(){
         SVProgressHUD.show()
@@ -63,7 +64,7 @@ private extension EpisodeDetailsViewController {
                 parameters: parameters,
                 encoding: JSONEncoding.default,
                 headers: headers
-            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<Episode>) in
+            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<EpisodeDetails>) in
                 switch response.result {
                 case .success(let episodeDetails):
                     print("Success: \(episodeDetails)")
@@ -83,5 +84,9 @@ private extension EpisodeDetailsViewController {
                 }
                 SVProgressHUD.dismiss()
         }
+    }
+    private func cleanPropertiesAndUI() {
+        self.episodeId = ""
+        self.token = ""
     }
 }

@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SVProgressHUD
+import Alamofire
+import CodableAlamofire
 
 class CommentsViewController: UIViewController {
     
@@ -21,13 +24,14 @@ class CommentsViewController: UIViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpNavigationBar()
-        setupTableView()
+        _loadComments()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    //MARK: - Actions
     @IBAction func postComment(_ sender: UIButton) {
         //Post API call
     }
@@ -35,22 +39,14 @@ class CommentsViewController: UIViewController {
 
 //MARK: - Set up UI
 private extension CommentsViewController {
-    private func setUpNavigationBar(){
-        navigationItem.title = "Comments"
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(
-            image: UIImage(contentsOfFile: "ic-navigate-back"),
-            style: .plain,
-            target: self,
-            action: #selector(goBack)
-        )
+    private func setupTableView() {
+        tableView.estimatedRowHeight = 91.5
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-    @objc func goBack() {
-        comments = []
-        episodeId = ""
-        token = ""
-        navigationController?.dismiss(animated: true)
-    }
-    
 }
 
 // MARK: - UITableView
@@ -66,13 +62,6 @@ extension CommentsViewController: UITableViewDelegate {
 
 extension CommentsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if comments.count == 0 {
-            tableView.separatorStyle = .none
-            tableView.backgroundView?.isHidden = false
-        } else {
-            tableView.separatorStyle = .singleLine
-            tableView.backgroundView?.isHidden = true
-        }
         return comments.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,13 +72,30 @@ extension CommentsViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - Set up UI
+//MARK: - Load comments
 private extension CommentsViewController {
-    private func setupTableView() {
-        tableView.estimatedRowHeight = 110
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.tableFooterView = UIView()
-        tableView.delegate = self
-        tableView.dataSource = self
+    private func _loadComments(){
+        SVProgressHUD.show()
+        let headers = ["Authorization": token]
+        Alamofire
+            .request(
+                "https://api.infinum.academy/api/episodes/" + episodeId + "/comments",
+                method: .get,
+                encoding: JSONEncoding.default,
+                headers: headers
+            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<[Comment]>) in
+                switch response.result {
+                case .success(let comments):
+                    print("Success: \(comments)")
+                    guard let self = self else { return }
+                    self.comments = comments
+                    self.setupTableView()
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print("API failure: \(error)")
+                    SVProgressHUD.showError(withStatus: "Error")
+                }
+                SVProgressHUD.dismiss()
+        }
     }
 }

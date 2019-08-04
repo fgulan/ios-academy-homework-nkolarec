@@ -20,6 +20,7 @@ class AddNewEpisodeViewController: UIViewController {
     var showId: String = ""
     var token: String = ""
     private var mediaId: String = ""
+    private var pickedImage = UIImage()
     private let imagePicker = UIImagePickerController()
     weak var delegate: AddNewEpisodeDelegate?
 
@@ -34,11 +35,8 @@ class AddNewEpisodeViewController: UIViewController {
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpNavigationBar()
+        setupNavigationBar()
         imagePicker.delegate = self
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     //MARK: - Actions
@@ -66,7 +64,7 @@ class AddNewEpisodeViewController: UIViewController {
             "showId": showId,
             "title": episodeTitle,
             "description": episodeDescription,
-            "imageUrl": "",
+            "mediaId": mediaId,
             "episodeNumber": episodeNumber,
             "season": episodeSeasonNumber
         ]
@@ -109,7 +107,7 @@ class AddNewEpisodeViewController: UIViewController {
 
 //MARK: - Navigation bar set up
 private extension AddNewEpisodeViewController {
-    private func setUpNavigationBar(){
+    private func setupNavigationBar(){
         navigationItem.title = "Add episode"
         navigationItem.rightBarButtonItem = UIBarButtonItem(
         title: "Add",
@@ -131,9 +129,7 @@ extension AddNewEpisodeViewController : UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         else { return }
-        episodeImage.image = pickedImage
-        episodeImage.sizeToFit()
-        episodeImage.setNeedsDisplay()
+        self.pickedImage = pickedImage
         picker.dismiss(animated: true)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

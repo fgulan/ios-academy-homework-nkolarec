@@ -78,7 +78,7 @@ private extension HomeViewController {
     }
     private func setupTableView() {
         tableView.estimatedRowHeight = 120
-        tableView.rowHeight = 120
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.delegate = self

@@ -69,7 +69,7 @@ extension ShowDetailsViewController: UITableViewDelegate {
         let epDetailsViewController = storyboard.instantiateViewController(
             withIdentifier: "EpisodeDetailsViewController"
             ) as! EpisodeDetailsViewController
-        navigationController?.pushViewController(epDetailsViewController, animated: true)
+        self.navigationController?.setViewControllers([epDetailsViewController], animated: true)
         epDetailsViewController.token = token
         epDetailsViewController.episodeId = episode.id
     }
@@ -90,9 +90,10 @@ extension ShowDetailsViewController: UITableViewDataSource {
 //MARK: - Set up UI
 private extension ShowDetailsViewController {
     private func setupTableView() {
-        tableView.estimatedRowHeight = 110
+        tableView.estimatedRowHeight = 51
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         
