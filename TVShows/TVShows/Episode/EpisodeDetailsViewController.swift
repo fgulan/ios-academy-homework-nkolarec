@@ -46,7 +46,7 @@ class EpisodeDetailsViewController: UIViewController {
         commentsViewController.episodeId = episodeId
     }
 
-    @IBAction func goToShowDetails(_ sender: Any) {
+    @IBAction func goToShowDetails(_ sender: UIButton) {
         cleanPropertiesAndUI()
         navigationController?.popViewController(animated: true)
     }

@@ -15,6 +15,7 @@ class CommentsViewController: UIViewController {
     
     //MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addCommentLabel: UITextField!
     
     //MARK: - Properties
     var episodeId: String = ""
@@ -33,14 +34,20 @@ class CommentsViewController: UIViewController {
     
     //MARK: - Actions
     @IBAction func postComment(_ sender: UIButton) {
-        //Post API call
+        guard
+            let newComment = addCommentLabel.text,
+            !newComment.isEmpty
+        else {
+            return
+        }
+        _postComment(text: newComment)
     }
 }
 
 //MARK: - Set up UI
 private extension CommentsViewController {
     private func setupTableView() {
-        tableView.estimatedRowHeight = 91.5
+        tableView.estimatedRowHeight = 72
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
@@ -94,6 +101,37 @@ private extension CommentsViewController {
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
+                }
+                SVProgressHUD.dismiss()
+        }
+    }
+}
+
+//MARK: - Post a comment
+private extension CommentsViewController {
+    private func _postComment(text: String){
+        SVProgressHUD.show()
+        let parameters = [
+            "text": text,
+            "episodeId": episodeId
+        ]
+        let headers = ["Authorization": token]
+        Alamofire
+            .request(
+                "https://api.infinum.academy/api/comments",
+                method: .post,
+                parameters: parameters,
+                encoding: JSONEncoding.default,
+                headers: headers
+            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<Comment>) in
+                switch response.result {
+                    case .success(let comment):
+                        print("Success: \(comment)")
+                        guard let self = self else { return }
+                        self._loadComments()
+                    case .failure(let error):
+                        print("API failure: \(error)")
+                        SVProgressHUD.showError(withStatus: "Error")
                 }
                 SVProgressHUD.dismiss()
         }

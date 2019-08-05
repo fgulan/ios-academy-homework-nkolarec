@@ -29,7 +29,6 @@ class CommentTableViewCell: UITableViewCell {
 // MARK: - Configure
 extension CommentTableViewCell {
     func configure(comment: Comment) {
-        commentLabel.text = comment.text
         usernameLabel.text = comment.userEmail
         generator = Int.random(in: 0 ... 10)
         if generator % 3 == 1 {
@@ -40,6 +39,6 @@ extension CommentTableViewCell {
         } else {
             commentImage.image = UIImage(named: "img-placeholder-user3")
         }
-        commentImage.setNeedsDisplay()
+        commentLabel.text = comment.text
     }
 }

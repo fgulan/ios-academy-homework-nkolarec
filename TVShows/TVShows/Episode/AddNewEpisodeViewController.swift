@@ -98,10 +98,6 @@ class AddNewEpisodeViewController: UIViewController {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
         navigationController?.present(imagePicker, animated: true)
-        guard let pickedImage = episodeImage.image else { return }
-        if pickedImage != UIImage(named: "ic-camera"){
-            _uploadImageOnAPI(pickedImage: pickedImage)
-        }
     }
 }
 
@@ -129,8 +125,8 @@ extension AddNewEpisodeViewController : UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         else { return }
-        self.pickedImage = pickedImage
         picker.dismiss(animated: true)
+        _uploadImageOnAPI(pickedImage: pickedImage)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
@@ -164,6 +160,7 @@ private extension AddNewEpisodeViewController {
                 
     }
     func _processUploadRequest(_ uploadRequest: UploadRequest) {
+        SVProgressHUD.show()
         uploadRequest
             .responseDecodableObject(keyPath: "data") { [weak self]
             (response: DataResponse<Media>) in
@@ -176,6 +173,7 @@ private extension AddNewEpisodeViewController {
             case .failure(let error):
                 print("API failure: \(error)")
             }
+            SVProgressHUD.dismiss()
         }
     }
 

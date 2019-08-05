@@ -12,7 +12,7 @@ struct EpisodeDetails: Codable {
     let id: String
     let title: String
     let description: String
-    let imageUrl:String
+    let imageUrl: String
     let episodeNumber: String
     let season: String
     let showId: String
