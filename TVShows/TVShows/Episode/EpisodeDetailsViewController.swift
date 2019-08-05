@@ -42,13 +42,15 @@ class EpisodeDetailsViewController: UIViewController {
         let commentsViewController = storyboard.instantiateViewController(
             withIdentifier: "CommentsViewController"
             ) as! CommentsViewController
-        self.navigationController?.pushViewController(commentsViewController, animated: true)
+        navigationController?.pushViewController(commentsViewController, animated: true)
         commentsViewController.episodeId = episodeId
     }
-    @IBAction func navigateBack(_ sender: UIButton) {
+
+    @IBAction func goToShowDetails(_ sender: Any) {
         cleanPropertiesAndUI()
         navigationController?.popViewController(animated: true)
     }
+    
 }
 
 //MARK: - Load episode details

@@ -99,7 +99,7 @@ class AddNewEpisodeViewController: UIViewController {
         imagePicker.sourceType = .photoLibrary
         navigationController?.present(imagePicker, animated: true)
         guard let pickedImage = episodeImage.image else { return }
-        if pickedImage != UIImage(contentsOfFile: "ic-camera"){
+        if pickedImage != UIImage(named: "ic-camera"){
             _uploadImageOnAPI(pickedImage: pickedImage)
         }
     }

@@ -97,6 +97,7 @@
         <!--Shows-->
         <scene sceneID="OaA-O1-CR9">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iun-eh-VB1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController title="Shows" automaticallyAdjustsScrollViewInsets="NO" id="fBR-Uh-dbn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Q2F-BE-fmF">
@@ -108,7 +109,6 @@
                         <segue destination="6zv-xM-xrB" kind="relationship" relationship="rootViewController" id="pxY-Sf-6vh"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Iun-eh-VB1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1018.840579710145" y="52.901785714285715"/>
         </scene>

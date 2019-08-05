@@ -34,7 +34,7 @@ class ShowDetailsViewController: UIViewController {
     //MARK: - Navigation and Actions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let addNewEpViewController = segue.destination as! AddNewEpisodeViewController
@@ -69,7 +69,7 @@ extension ShowDetailsViewController: UITableViewDelegate {
         let epDetailsViewController = storyboard.instantiateViewController(
             withIdentifier: "EpisodeDetailsViewController"
             ) as! EpisodeDetailsViewController
-        self.navigationController?.setViewControllers([epDetailsViewController], animated: true)
+        self.navigationController?.pushViewController(epDetailsViewController, animated: true)
         epDetailsViewController.token = token
         epDetailsViewController.episodeId = episode.id
     }
