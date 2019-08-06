@@ -58,6 +58,29 @@ private extension CommentsViewController {
         tableView.dataSource = self
         tableView.refreshControl?.tintColor = UIColor.gray
     }
+    private func setupEmptyTableView(){
+        let emptyView = UIView(frame: CGRect(x: tableView.center.x, y: tableView.center.y, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        let messageImage = UIImageView(image: UIImage(named: "img-placehoder-comments"))
+        let messageLabel = UILabel()
+        messageLabel.textColor = UIColor.gray
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.text = "Sorry, we don't have comments yet. Be first who will write a review."
+        emptyView.addSubview(messageImage)
+        emptyView.addSubview(messageLabel)
+        messageImage.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        messageImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        messageImage.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
+        messageImage.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: messageImage.bottomAnchor, constant: 20).isActive = true
+        messageLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 20).isActive = true
+        messageLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -20).isActive = true
+        tableView.backgroundView = emptyView
+        tableView.backgroundView?.isHidden = false
+        tableView.separatorStyle = .none
+    }
 }
 
 // MARK: - UITableView
@@ -70,9 +93,13 @@ extension CommentsViewController: UITableViewDelegate {
         }
     }
 }
-
 extension CommentsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if comments.count == 0 {
+            setupEmptyTableView()
+        } else {
+            tableView.backgroundView?.isHidden = true
+        }
         return comments.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
