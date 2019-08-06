@@ -28,7 +28,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0zH-E1-ydt">
-                                        <rect key="frame" x="0.0" y="45.5" width="334" height="609.5"/>
+                                        <rect key="frame" x="0.0" y="45.5" width="334" height="664.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableViewCell" rowHeight="93" id="9zw-Yy-BKT" customClass="CommentTableViewCell" customModule="TVShows" customModuleProvider="target">
@@ -101,29 +101,6 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="j6Z-QJ-Dwl">
-                                        <rect key="frame" x="0.0" y="680" width="334" height="30"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EiC-ds-Wso">
-                                                <rect key="frame" x="0.0" y="0.0" width="254" height="30"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kMi-dH-Vl4">
-                                                <rect key="frame" x="264" y="0.0" width="70" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="70" id="ILx-mT-VMJ"/>
-                                                </constraints>
-                                                <state key="normal" title="Post">
-                                                    <color key="titleColor" red="1" green="0.45882352939999999" blue="0.54901960780000003" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="postComment:" destination="GLS-xe-S9a" eventType="touchUpInside" id="K4O-Is-ReX"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="dyJ-oJ-08m" firstAttribute="top" secondItem="jTD-F0-kOz" secondAttribute="top" id="CDk-A0-vFm"/>
@@ -141,10 +118,67 @@
                                     <action selector="navigateBack:" destination="GLS-xe-S9a" eventType="touchUpInside" id="XQv-P1-vVx"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="l08-kZ-GRC">
+                                <rect key="frame" x="30" y="805" width="354" height="41"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CJK-Re-guP">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="1"/>
+                                        <color key="backgroundColor" red="0.74117647060000003" green="0.74117647060000003" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="f3K-PT-9cv"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fuz-oz-pBm">
+                                        <rect key="frame" x="0.0" y="1" width="354" height="5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="5" id="VdM-LG-d2Q"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="j6Z-QJ-Dwl">
+                                        <rect key="frame" x="0.0" y="6" width="354" height="30"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EiC-ds-Wso">
+                                                <rect key="frame" x="0.0" y="0.0" width="299" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kMi-dH-Vl4">
+                                                <rect key="frame" x="314" y="0.0" width="40" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="Beh-MZ-yGW"/>
+                                                </constraints>
+                                                <state key="normal" title="Post">
+                                                    <color key="titleColor" red="1" green="0.45882352939999999" blue="0.54901960780000003" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="postComment:" destination="GLS-xe-S9a" eventType="touchUpInside" id="K4O-Is-ReX"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fPP-Kd-Gpr">
+                                        <rect key="frame" x="0.0" y="36" width="354" height="5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="5" id="BCN-m2-TsZ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="CJK-Re-guP" firstAttribute="top" secondItem="l08-kZ-GRC" secondAttribute="top" id="S1F-1G-Syp"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="o2r-ng-DAp" firstAttribute="trailing" secondItem="l08-kZ-GRC" secondAttribute="trailing" constant="30" id="7Q9-se-Orc"/>
                             <constraint firstItem="F1l-rs-Cx2" firstAttribute="leading" secondItem="o2r-ng-DAp" secondAttribute="leading" constant="30" id="CKl-L5-fo6"/>
+                            <constraint firstItem="o2r-ng-DAp" firstAttribute="bottom" secondItem="l08-kZ-GRC" secondAttribute="bottom" constant="16" id="DcN-nv-UCO"/>
+                            <constraint firstItem="l08-kZ-GRC" firstAttribute="leading" secondItem="o2r-ng-DAp" secondAttribute="leading" constant="30" id="F7F-9u-wy6"/>
                             <constraint firstItem="jTD-F0-kOz" firstAttribute="centerY" secondItem="h0E-yR-MdR" secondAttribute="centerY" id="P7n-jQ-c7m"/>
                             <constraint firstItem="jTD-F0-kOz" firstAttribute="leading" secondItem="o2r-ng-DAp" secondAttribute="leading" constant="40" id="gmp-ax-SJu"/>
                             <constraint firstItem="jTD-F0-kOz" firstAttribute="centerX" secondItem="h0E-yR-MdR" secondAttribute="centerX" id="n41-db-K1m"/>
@@ -155,6 +189,7 @@
                     </view>
                     <connections>
                         <outlet property="addCommentLabel" destination="EiC-ds-Wso" id="vq8-Da-WPh"/>
+                        <outlet property="bottomViewHeight" destination="BCN-m2-TsZ" id="ORh-eD-doi"/>
                         <outlet property="tableView" destination="0zH-E1-ydt" id="5Jn-Hm-HCK"/>
                     </connections>
                 </viewController>

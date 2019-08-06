@@ -68,12 +68,14 @@ private extension HomeViewController {
             style: .plain,
             target: self,
             action: #selector(_logout))
+        logoutItem.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = logoutItem
         let toggleViewItem = UIBarButtonItem.init(
             image: UIImage(imageLiteralResourceName: "ic-gridview"),
             style: .plain,
             target: self,
             action: #selector(_toggleView))
+        toggleViewItem.tintColor = UIColor.black
         navigationItem.rightBarButtonItem = toggleViewItem
     }
     private func setupTableView() {

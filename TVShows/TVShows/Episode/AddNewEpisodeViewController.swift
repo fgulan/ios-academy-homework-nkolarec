@@ -14,7 +14,7 @@ protocol AddNewEpisodeDelegate: class {
     func refreshListOfEpisodes()
 }
 
-final class AddNewEpisodeViewController: UIViewController {
+class AddNewEpisodeViewController: UIViewController {
 
     //MARK: - Properties
     var showId: String = ""
@@ -112,12 +112,14 @@ private extension AddNewEpisodeViewController {
         target: self,
         action: #selector(addNewEpisode)
         )
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = UIBarButtonItem(
         title: "Cancel",
         style: .plain,
         target: self,
         action: #selector(cancelAddingNewEpisode)
         )
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
     }
 }
 

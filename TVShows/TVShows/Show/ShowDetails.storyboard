@@ -207,7 +207,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Rgy-Uv-UQZ" firstAttribute="centerX" secondItem="uXw-ih-TaH" secondAttribute="centerX" id="0AO-di-F8l"/>
                             <constraint firstItem="1S8-Tw-3ku" firstAttribute="leading" secondItem="R99-GH-q1t" secondAttribute="leading" constant="310" id="Ade-jT-BZ5"/>
                             <constraint firstItem="R99-GH-q1t" firstAttribute="trailing" secondItem="1S8-Tw-3ku" secondAttribute="trailing" constant="36" id="DI2-Gj-RAT"/>
                             <constraint firstItem="Rgy-Uv-UQZ" firstAttribute="centerX" secondItem="uXw-ih-TaH" secondAttribute="centerX" id="Frd-Xb-Ige"/>
@@ -216,7 +215,6 @@
                             <constraint firstItem="Rgy-Uv-UQZ" firstAttribute="top" secondItem="R99-GH-q1t" secondAttribute="top" constant="29" id="SyQ-Nc-uGO"/>
                             <constraint firstItem="R99-GH-q1t" firstAttribute="bottom" secondItem="1S8-Tw-3ku" secondAttribute="bottom" constant="22" id="ddW-Es-vyu"/>
                             <constraint firstItem="Iti-IF-AmW" firstAttribute="leading" secondItem="R99-GH-q1t" secondAttribute="leading" constant="25" id="fFn-BW-Os1"/>
-                            <constraint firstItem="Rgy-Uv-UQZ" firstAttribute="centerX" secondItem="uXw-ih-TaH" secondAttribute="centerX" id="gcw-1z-whg"/>
                             <constraint firstItem="Iti-IF-AmW" firstAttribute="top" secondItem="R99-GH-q1t" secondAttribute="top" constant="37" id="y2y-Tv-nvJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="R99-GH-q1t"/>

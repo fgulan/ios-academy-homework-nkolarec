@@ -16,15 +16,23 @@ final class CommentsViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var addCommentLabel: UITextField!
+
+    @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
     
     //MARK: - Properties
     var episodeId: String = ""
     var token: String = ""
     private var comments: [Comment] = []
+    private var notificationTokens: [NSObjectProtocol] = []
+    
+    deinit {
+        notificationTokens.forEach(NotificationCenter.default.removeObserver)
+    }
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupKeyboardEvent()
         _loadComments()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +73,8 @@ private extension CommentsViewController {
         messageLabel.textColor = UIColor.gray
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
-        messageLabel.text = "Sorry, we don't have comments yet. Be first who will write a review."
+        messageLabel.text =
+        "Sorry, we don't have comments yet. Be first who will write a review."
         emptyView.addSubview(messageImage)
         emptyView.addSubview(messageLabel)
         messageImage.translatesAutoresizingMaskIntoConstraints = false
@@ -80,6 +89,39 @@ private extension CommentsViewController {
         tableView.backgroundView = emptyView
         tableView.backgroundView?.isHidden = false
         tableView.separatorStyle = .none
+    }
+    private func setupKeyboardEvent(){
+            let willShowToken = NotificationCenter
+                .default
+                .addObserver(
+                    forName: UIResponder.keyboardWillShowNotification,
+                    object: nil,
+                    queue: .main
+                ){ [weak self] notification in
+                    guard let userInfo = notification.userInfo else {return}
+                    guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+                    let keyboardFrame = keyboardSize.cgRectValue
+                    guard let self = self else { return }
+                    self.bottomViewHeight.constant = keyboardFrame.height - 30
+                    
+            }
+            let willHideToken = NotificationCenter
+                .default
+                .addObserver(
+                    forName: UIResponder.keyboardWillHideNotification,
+                    object: nil,
+                    queue: .main
+                ){ [weak self] notification in
+                    guard let self = self else { return }
+                    self.bottomViewHeight.constant = 5
+            }
+            notificationTokens.append(willHideToken)
+            notificationTokens.append(willShowToken)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            self.view.addGestureRecognizer(tapGesture)
+    }
+    @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        addCommentLabel.resignFirstResponder()
     }
 }
 
@@ -173,6 +215,7 @@ private extension CommentsViewController {
                     self.comments.append(comment)
                     self.tableView.reloadData()
                     self.tableView.refreshControl?.endRefreshing()
+                    self.addCommentLabel.text = nil
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")

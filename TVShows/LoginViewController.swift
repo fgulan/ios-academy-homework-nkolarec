@@ -20,10 +20,12 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var checkButton: UIButton!
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var createAccountButton: UIButton!
+    @IBOutlet weak var loginView: UIScrollView!
     
     //MARK: - Properties
     let keychainUsername = Keychain(service: "username")
     let keychainPassword = Keychain(service: "password")
+
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -68,7 +70,7 @@ final class LoginViewController: UIViewController {
 
 // MARK: - Register user
 private extension LoginViewController {
-    func _registerUserWith(email: String, password: String){
+    private func _registerUserWith(email: String, password: String){
         SVProgressHUD.show()
         let parameters: [String: String] = [
             "email": email,
@@ -99,7 +101,7 @@ private extension LoginViewController {
 
 // MARK: - Login user
 private extension LoginViewController {
-    func _loginUserWith(email: String, password: String) {
+    private func _loginUserWith(email: String, password: String) {
         SVProgressHUD.show()
         if checkButton.isSelected {
             rememberPassword(email: email, password: password)
@@ -160,6 +162,8 @@ private extension LoginViewController {
         } catch { print(error) }
     }
 }
+
+
 
 //MARK: - Custom alert dialog on error
 extension UIViewController {
