@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-final class ShowTableViewCell: UITableViewCell {
+final class ShowTableViewCell: UICollectionViewCell {
 
     // MARK: - Private UI
     @IBOutlet private weak var title: UILabel!

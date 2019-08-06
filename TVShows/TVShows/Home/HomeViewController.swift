@@ -15,9 +15,10 @@ final class HomeViewController: UIViewController {
     //MARK: - Properties
     private var shows: [Show] = []
     var token: String = ""
+    private var isListView: Bool = true
     
     // MARK: - Private UI
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     
     //MARK: Lifecycle methods
     override func viewDidLoad() {
@@ -32,30 +33,48 @@ final class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - UITableView
-extension HomeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+// MARK: - UICollectionView
+extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
         let show = shows[indexPath.row]
         print("Selected show: \(show)")
         _showDetails(showId: show.id)
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            shows.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
+
 }
-extension HomeViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension HomeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return shows.count
     }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ tableView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("CURRENT INDEX PATH BEING CONFIGURED: \(indexPath)")
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ShowTableViewCell.self), for: indexPath) as! ShowTableViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ShowTableViewCell.self), for: indexPath) as! ShowTableViewCell
         cell.configure(show: shows[indexPath.row])
         return cell
+    }
+}
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.frame.width
+        if isListView {
+
+            return CGSize(width: width, height: 120)
+        }else {
+            return CGSize(width: 90, height: 120)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
 }
 
@@ -78,13 +97,9 @@ private extension HomeViewController {
         toggleViewItem.tintColor = UIColor.black
         navigationItem.rightBarButtonItem = toggleViewItem
     }
-    private func setupTableView() {
-        tableView.estimatedRowHeight = 120
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
-        tableView.tableFooterView = UIView()
-        tableView.delegate = self
-        tableView.dataSource = self
+    private func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     private func _loadShows(){
         SVProgressHUD.show()
@@ -101,8 +116,8 @@ private extension HomeViewController {
                     print("Success: \(shows)")
                     guard let self = self else { return }
                     self.shows = shows
-                    self.setupTableView()
-                    self.tableView.reloadData()
+                    self.setupCollectionView()
+                    self.collectionView.reloadData()
                 case .failure(let error):
                     print("API failure: \(error)")
                     SVProgressHUD.showError(withStatus: "Error")
@@ -128,10 +143,12 @@ private extension HomeViewController {
     @objc private func _toggleView() {
         if navigationItem.rightBarButtonItem?.image == UIImage(imageLiteralResourceName: "ic-gridview"){
             navigationItem.rightBarButtonItem?.image = UIImage(imageLiteralResourceName: "ic-listview")
+            isListView = false
         } else {
             navigationItem.rightBarButtonItem?.image = UIImage(imageLiteralResourceName: "ic-gridview")
+            isListView = true
         }
-        //change view
+        collectionView.reloadData()
     }
 }
 
