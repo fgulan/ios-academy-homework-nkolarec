@@ -11,7 +11,7 @@ import SVProgressHUD
 import Alamofire
 import Kingfisher
 
-class ShowDetailsViewController: UIViewController {
+final class ShowDetailsViewController: UIViewController {
 
     //MARK: - Properties
     var showId: String = ""

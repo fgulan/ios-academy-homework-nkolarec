@@ -8,12 +8,13 @@
 
 import UIKit
 
-class CommentTableViewCell: UITableViewCell {
+final class CommentTableViewCell: UITableViewCell {
 
     //MARK: - Outlets
     @IBOutlet private weak var commentImage: UIImageView!
     @IBOutlet private weak var usernameLabel: UILabel!
     @IBOutlet private weak var commentLabel: UILabel!
+    @IBOutlet weak var lineView: UIView!
     
     //MARK: - Properties
     private var generator: Int = 0
@@ -28,7 +29,7 @@ class CommentTableViewCell: UITableViewCell {
 
 // MARK: - Configure
 extension CommentTableViewCell {
-    func configure(comment: Comment) {
+    func configure(comment: Comment, editFirstRow: Bool) {
         usernameLabel.text = comment.userEmail
         generator = Int.random(in: 0 ... 10)
         if generator % 3 == 1 {
@@ -40,5 +41,8 @@ extension CommentTableViewCell {
             commentImage.image = UIImage(named: "img-placeholder-user3")
         }
         commentLabel.text = comment.text
+        if editFirstRow == true {
+            lineView.backgroundColor = UIColor.white
+        }
     }
 }

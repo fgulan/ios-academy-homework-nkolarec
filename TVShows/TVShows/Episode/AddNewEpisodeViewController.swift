@@ -14,7 +14,7 @@ protocol AddNewEpisodeDelegate: class {
     func refreshListOfEpisodes()
 }
 
-class AddNewEpisodeViewController: UIViewController {
+final class AddNewEpisodeViewController: UIViewController {
 
     //MARK: - Properties
     var showId: String = ""
@@ -44,6 +44,7 @@ class AddNewEpisodeViewController: UIViewController {
         navigationController?.dismiss(animated: true)
     }
     @objc func addNewEpisode() {
+        SVProgressHUD.show()
         guard
             let episodeTitle = epTitleTextField.text,
             let episodeSeasonNumber = seasonNumberTextfield.text,

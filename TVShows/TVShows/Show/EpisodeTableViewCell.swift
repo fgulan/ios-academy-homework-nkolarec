@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EpisodeTableViewCell: UITableViewCell {
+final class EpisodeTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
     @IBOutlet private weak var seasonNumberLabel: UILabel!

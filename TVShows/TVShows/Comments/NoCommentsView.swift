@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NoCommentsView: UIView {
+final class NoCommentsView: UIView {
 
     //MARK: - Private UI
     private var imageView: UIImageView!

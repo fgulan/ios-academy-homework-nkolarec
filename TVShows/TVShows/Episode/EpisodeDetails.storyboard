@@ -81,8 +81,12 @@
                                             </button>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="WXV-BJ-iuo" firstAttribute="top" secondItem="jJ4-tG-O0l" secondAttribute="bottom" constant="10" id="30N-Zd-Qhc"/>
+                                            <constraint firstAttribute="trailing" secondItem="jJ4-tG-O0l" secondAttribute="trailing" id="dtk-uY-h4h"/>
                                             <constraint firstItem="KiW-Mg-yJw" firstAttribute="top" secondItem="WXV-BJ-iuo" secondAttribute="bottom" constant="10" id="nXP-mj-0PH"/>
+                                            <constraint firstItem="jJ4-tG-O0l" firstAttribute="leading" secondItem="EXg-cL-uNi" secondAttribute="leading" id="rSt-fq-yhY"/>
                                             <constraint firstItem="KiW-Mg-yJw" firstAttribute="top" secondItem="WXV-BJ-iuo" secondAttribute="bottom" constant="10" id="vuV-R7-zVq"/>
+                                            <constraint firstItem="jJ4-tG-O0l" firstAttribute="top" secondItem="NAl-cD-Lwj" secondAttribute="bottom" constant="10" id="wVn-t1-0YT"/>
                                             <constraint firstItem="KiW-Mg-yJw" firstAttribute="top" secondItem="WXV-BJ-iuo" secondAttribute="bottom" constant="10" id="xJZ-2D-nI4"/>
                                         </constraints>
                                     </stackView>
@@ -120,7 +124,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Fn2-45-J1W"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Comments" id="Kx1-AN-PMm">
+                    <navigationItem key="navigationItem" id="Kx1-AN-PMm">
                         <barButtonItem key="backBarButtonItem" title=" " id="ZoL-7F-I5r"/>
                     </navigationItem>
                     <connections>
@@ -138,7 +142,6 @@
         <!--Episode Details-->
         <scene sceneID="GRC-yO-WdY">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WMS-bG-Y6e" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController title="Episode Details" automaticallyAdjustsScrollViewInsets="NO" id="NDJ-AW-IMW" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IYK-0C-kLu">
@@ -150,6 +153,7 @@
                         <segue destination="O06-lc-Rc1" kind="relationship" relationship="rootViewController" id="wVR-KZ-5Of"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WMS-bG-Y6e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-123.18840579710145" y="64.955357142857139"/>
         </scene>

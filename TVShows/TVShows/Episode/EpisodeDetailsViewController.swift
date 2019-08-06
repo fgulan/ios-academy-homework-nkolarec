@@ -12,7 +12,7 @@ import CodableAlamofire
 import Kingfisher
 import SVProgressHUD
 
-class EpisodeDetailsViewController: UIViewController {
+final class EpisodeDetailsViewController: UIViewController {
 
     //MARK: - Outlets
     @IBOutlet private weak var episodeImage: UIImageView!
@@ -44,6 +44,7 @@ class EpisodeDetailsViewController: UIViewController {
             ) as! CommentsViewController
         navigationController?.pushViewController(commentsViewController, animated: true)
         commentsViewController.episodeId = episodeId
+        commentsViewController.token = token
     }
 
     @IBAction func goToShowDetails(_ sender: UIButton) {

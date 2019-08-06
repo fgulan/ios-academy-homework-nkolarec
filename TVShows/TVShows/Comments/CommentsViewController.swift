@@ -11,11 +11,11 @@ import SVProgressHUD
 import Alamofire
 import CodableAlamofire
 
-class CommentsViewController: UIViewController {
+final class CommentsViewController: UIViewController {
     
     //MARK: - Outlets
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var addCommentLabel: UITextField!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var addCommentLabel: UITextField!
     
     //MARK: - Properties
     var episodeId: String = ""
@@ -29,7 +29,7 @@ class CommentsViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     //MARK: - Actions
@@ -42,6 +42,9 @@ class CommentsViewController: UIViewController {
         }
         _postComment(text: newComment)
     }
+    @IBAction func navigateBack(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 //MARK: - Set up UI
@@ -53,6 +56,7 @@ private extension CommentsViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.refreshControl?.tintColor = UIColor.gray
     }
 }
 
@@ -74,7 +78,9 @@ extension CommentsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("CURRENT INDEX PATH BEING CONFIGURED: \(indexPath)")
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CommentTableViewCell.self), for: indexPath) as! CommentTableViewCell
-        cell.configure(comment: comments[indexPath.row])
+        if  indexPath.row == 0 {
+            cell.configure(comment: comments[indexPath.row], editFirstRow: true)
+        } else { cell.configure(comment: comments[indexPath.row], editFirstRow: false) }
         return cell
     }
 }
@@ -111,10 +117,11 @@ private extension CommentsViewController {
 private extension CommentsViewController {
     private func _postComment(text: String){
         SVProgressHUD.show()
-        let parameters = [
+        let parameters: [String: String] = [
             "text": text,
             "episodeId": episodeId
         ]
+        
         let headers = ["Authorization": token]
         Alamofire
             .request(
@@ -122,16 +129,26 @@ private extension CommentsViewController {
                 method: .post,
                 parameters: parameters,
                 encoding: JSONEncoding.default,
-                headers: headers
-            ).responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<Comment>) in
+                headers: headers)
+            .validate()
+            .responseDecodableObject(keyPath: "data", decoder: JSONDecoder()) { [weak self] (response: DataResponse<CommentDetails>) in
                 switch response.result {
-                    case .success(let comment):
-                        print("Success: \(comment)")
-                        guard let self = self else { return }
-                        self._loadComments()
-                    case .failure(let error):
-                        print("API failure: \(error)")
-                        SVProgressHUD.showError(withStatus: "Error")
+                case .success(let commentDetails):
+                    print("Success: \(commentDetails)")
+                    SVProgressHUD.showSuccess(withStatus: "Success")
+                    guard let self = self else { return }
+                    self.tableView.refreshControl?.beginRefreshing()
+                    let comment = Comment(
+                        id: commentDetails.id,
+                        text: commentDetails.text,
+                        userEmail: commentDetails.userEmail,
+                        episodeId: commentDetails.episodeId)
+                    self.comments.append(comment)
+                    self.tableView.reloadData()
+                    self.tableView.refreshControl?.endRefreshing()
+                case .failure(let error):
+                    print("API failure: \(error)")
+                    SVProgressHUD.showError(withStatus: "Error")
                 }
                 SVProgressHUD.dismiss()
         }
