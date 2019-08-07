@@ -11,7 +11,7 @@ import SVProgressHUD
 import Alamofire
 
 protocol AddNewEpisodeDelegate: class {
-    func refreshListOfEpisodes(episode: Episode)
+    func refreshListOfEpisodes()
 }
 
 class AddNewEpisodeViewController: UIViewController {
@@ -19,6 +19,9 @@ class AddNewEpisodeViewController: UIViewController {
     //MARK: - Properties
     var showId: String = ""
     var token: String = ""
+    private var mediaId: String = ""
+    private var pickedImage = UIImage()
+    private let imagePicker = UIImagePickerController()
     weak var delegate: AddNewEpisodeDelegate?
 
     
@@ -27,11 +30,13 @@ class AddNewEpisodeViewController: UIViewController {
     @IBOutlet private weak var seasonNumberTextfield: UITextField!
     @IBOutlet private weak var epNumberTextfield: UITextField!
     @IBOutlet private weak var epDescriptionTextField: UITextField!
+    @IBOutlet private weak var episodeImage: UIImageView!
     
     //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpNavigationBar()
+        setupNavigationBar()
+        imagePicker.delegate = self
     }
     
     //MARK: - Actions
@@ -39,6 +44,7 @@ class AddNewEpisodeViewController: UIViewController {
         navigationController?.dismiss(animated: true)
     }
     @objc func addNewEpisode() {
+        SVProgressHUD.show()
         guard
             let episodeTitle = epTitleTextField.text,
             let episodeSeasonNumber = seasonNumberTextfield.text,
@@ -49,14 +55,17 @@ class AddNewEpisodeViewController: UIViewController {
             !episodeNumber.isEmpty,
             !episodeDescription.isEmpty
         else {
-            showAlert(title: "Add episode", message: "Fields must not be empty.")
+            animate(viewToShake: epTitleTextField)
+            animate(viewToShake: seasonNumberTextfield)
+            animate(viewToShake: epNumberTextfield)
+            animate(viewToShake: epDescriptionTextField)
             return
         }
         let parameters: [String: String] = [
             "showId": showId,
             "title": episodeTitle,
             "description": episodeDescription,
-            "imageUrl": "",
+            "mediaId": mediaId,
             "episodeNumber": episodeNumber,
             "season": episodeSeasonNumber
         ]
@@ -75,7 +84,7 @@ class AddNewEpisodeViewController: UIViewController {
                     print("Success: \(episode)")
                     SVProgressHUD.showSuccess(withStatus: "Success")
                     guard let self = self else { return }
-                    self.delegate?.refreshListOfEpisodes(episode: episode)
+                    self.delegate?.refreshListOfEpisodes()
                     self.navigationController?.dismiss(animated: true)
                     
                 case .failure(let error):
@@ -87,13 +96,15 @@ class AddNewEpisodeViewController: UIViewController {
             }
     }
     @IBAction func uploadPhoto(_ sender: Any) {
-        //for later
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        navigationController?.present(imagePicker, animated: true)
     }
 }
 
 //MARK: - Navigation bar set up
 private extension AddNewEpisodeViewController {
-    private func setUpNavigationBar(){
+    private func setupNavigationBar(){
         navigationItem.title = "Add episode"
         navigationItem.rightBarButtonItem = UIBarButtonItem(
         title: "Add",
@@ -101,11 +112,73 @@ private extension AddNewEpisodeViewController {
         target: self,
         action: #selector(addNewEpisode)
         )
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = UIBarButtonItem(
         title: "Cancel",
         style: .plain,
         target: self,
         action: #selector(cancelAddingNewEpisode)
         )
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
     }
 }
+
+//MARK: - Pick an image from photo library
+extension AddNewEpisodeViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        else { return }
+        picker.dismiss(animated: true)
+        _uploadImageOnAPI(pickedImage: pickedImage)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+//MARK: - Uploading image on episode
+private extension AddNewEpisodeViewController {
+    func _uploadImageOnAPI(pickedImage: UIImage) {
+        let headers = ["Authorization": token]
+        let imageByteData = pickedImage.pngData()!
+        Alamofire
+            .upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(
+                imageByteData,
+                withName: "file",
+                fileName: "image.png",
+                mimeType: "image/png")
+            }, to: "https://api.infinum.academy/api/media",
+               method: .post,
+               headers: headers)
+            { [weak self] result in
+                switch result {
+                case .success(let uploadRequest, _, _):
+                    guard let self = self else { return }
+                    self._processUploadRequest(uploadRequest)
+                case .failure(let encodingError):
+                    print("API failure: \(encodingError)")
+            }
+        }
+                
+    }
+    func _processUploadRequest(_ uploadRequest: UploadRequest) {
+        SVProgressHUD.show()
+        uploadRequest
+            .responseDecodableObject(keyPath: "data") { [weak self]
+            (response: DataResponse<Media>) in
+            switch response.result {
+            case .success(let media):
+                print("DECODED: \(media)")
+                print("Proceed to add episode call...")
+                guard let self = self else { return }
+                self.mediaId = media.id
+            case .failure(let error):
+                print("API failure: \(error)")
+            }
+            SVProgressHUD.dismiss()
+        }
+    }
+
+}
+

@@ -13,7 +13,7 @@
         <!--Login View Controller-->
         <scene sceneID="OO8-Kj-hKf">
             <objects>
-                <viewController id="yfF-hC-RbD" customClass="LoginViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="yfF-hC-RbD" customClass="LoginViewController" customModule="TVShows" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OtU-EY-mcV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -163,6 +163,7 @@
                         <outlet property="checkButton" destination="I1n-pl-BtE" id="JGl-f6-X45"/>
                         <outlet property="createAccountButton" destination="K1b-03-88G" id="fl8-CA-vHw"/>
                         <outlet property="logInButton" destination="mkI-JH-1iE" id="Hdi-of-teN"/>
+                        <outlet property="loginView" destination="5av-bp-WIN" id="U3M-36-g1A"/>
                         <outlet property="passwordTextField" destination="idT-TM-mlK" id="w47-CZ-Vpx"/>
                         <outlet property="usernameTextField" destination="FvA-6U-U8e" id="fHl-iD-3L8"/>
                     </connections>

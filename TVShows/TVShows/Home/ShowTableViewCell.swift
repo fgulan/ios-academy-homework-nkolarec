@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import Kingfisher
 
-final class ShowTableViewCell: UITableViewCell {
+final class ShowTableViewCell: UICollectionViewCell {
 
     // MARK: - Private UI
     @IBOutlet private weak var title: UILabel!
+    @IBOutlet weak var showImage: UIImageView!
     
     override func prepareForReuse() {
         super.prepareForReuse()
         title.text = nil
+        showImage.image = nil
     }
 }
 
@@ -23,12 +26,8 @@ final class ShowTableViewCell: UITableViewCell {
 extension ShowTableViewCell {
     func configure(show: Show) {
         title.text = show.title
-    }
-}
-
-// MARK: - Private
-private extension ShowTableViewCell {
-    func setupUI() {
-        //for later
+        guard let url = URL(string: "https://api.infinum.academy" + show.imageUrl)
+        else { return }
+        showImage.kf.setImage(with: url)
     }
 }
