@@ -1,1 +1,1 @@
-# Infinum Academy 2019 - iOS
+# Infinum Academy 2019 - iOS Course
